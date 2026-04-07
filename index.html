@@ -5,14 +5,551 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WW2 Interactive History</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* General Reset & Variables */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-color: #0f1115;
+            --text-color: #e0e0e0;
+            --accent-color: #c92a2a;
+            --card-bg: #1a1d24;
+            --nav-bg: rgba(15, 17, 21, 0.9);
+            --font-heading: 'Cinzel', serif;
+            --font-body: 'Lato', sans-serif;
+        }
+
+        body, html {
+            font-family: var(--font-body);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            letter-spacing: 1px;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: transparent;
+            transition: background 0.4s ease, padding 0.4s ease;
+            z-index: 1000;
+        }
+
+        .navbar.scrolled {
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .navbar.scrolled-nav {
+            background: var(--nav-bg);
+            padding: 1rem 5%;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #fff;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hamburger .line {
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        #home-hero {
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/St_Paul%27s_survives.jpg/1920px-St_Paul%27s_survives.jpg');
+        }
+
+        #america-hero {
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Pearl_Harbor_bombing.jpg/1920px-Pearl_Harbor_bombing.jpg');
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(15,17,21,1) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: #bbb;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--accent-color);
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            border-radius: 4px;
+            transition: background 0.3s, transform 0.3s;
+            border: 1px solid var(--accent-color);
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: transparent;
+            transform: translateY(-3px);
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .mouse {
+            width: 30px;
+            height: 50px;
+            border: 2px solid #fff;
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .mouse::before {
+            content: '';
+            width: 4px;
+            height: 8px;
+            background: #fff;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+            animation: scroll 2s infinite;
+        }
+
+        @keyframes scroll {
+            0% { transform: translate(-50%, 0); opacity: 1; }
+            100% { transform: translate(-50%, 20px); opacity: 0; }
+        }
+
+        /* Main Content */
+        main {
+            padding: 4rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .content-section {
+            margin-bottom: 5rem;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+            position: relative;
+            display: inline-block;
+        }
+
+        .content-section h2::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background: var(--accent-color);
+            bottom: -10px;
+            left: 0;
+        }
+
+        .text-center h2::after {
+            left: 25%;
+        }
+
+        .content-section p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #bbb;
+        }
+
+        .lead-text {
+            font-size: 1.3rem !important;
+            color: #ddd !important;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* Topics Grid */
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .topic-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+        }
+
+        .topic-card.disabled {
+            cursor: not-allowed;
+            filter: grayscale(80%);
+        }
+
+        .topic-card.disabled:hover {
+            transform: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .card-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.5s ease;
+        }
+
+        .topic-card:hover .card-image {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            z-index: 1;
+            background: var(--card-bg);
+        }
+
+        .card-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .card-content p {
+            color: #aaa;
+            line-height: 1.5;
+        }
+
+        /* Timeline */
+        .timeline-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        .timeline {
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background: #333;
+            top: 0;
+            bottom: 0;
+            left: 20px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            padding-left: 60px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            left: 11px;
+            top: 5px;
+            box-shadow: 0 0 10px var(--accent-color);
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-item:hover .timeline-dot {
+            transform: scale(1.5);
+        }
+
+        .timeline-content {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateX(10px);
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid var(--card-bg);
+            left: -10px;
+            top: 5px;
+        }
+
+        .timeline-content h3 {
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content h4 {
+            color: #fff;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-content p {
+            color: #aaa;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: #0a0b0e;
+            text-align: center;
+            padding: 2rem;
+            color: #555;
+            font-size: 0.9rem;
+            border-top: 1px solid #222;
+        }
+
+        /* Animations */
+        .hidden {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 1s ease forwards;
+            opacity: 0;
+        }
+
+        .slide-in-left {
+            animation: slideInLeft 1s ease forwards;
+            opacity: 0;
+        }
+
+        .delay-1 { animation-delay: 0.3s; transition-delay: 0.3s; }
+        .delay-2 { animation-delay: 0.6s; transition-delay: 0.6s; }
+        .delay-3 { animation-delay: 0.9s; transition-delay: 0.9s; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Typing Effect Cursor */
+        .typing-text {
+            border-right: 3px solid var(--accent-color);
+            white-space: nowrap;
+            overflow: hidden;
+            margin: 0 auto;
+            display: inline-block;
+            animation: typing 3s steps(40, end), blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--accent-color); }
+        }
+
+        /* Page Styles */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                right: -100%;
+                top: 0;
+                height: 100vh;
+                background: var(--nav-bg);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: 60%;
+                transition: right 0.4s ease;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .hamburger {
+                display: block;
+                z-index: 1001;
+            }
+
+            .hamburger.active .line:nth-child(1) { transform: rotate(-45deg) translate(-5px, 6px); }
+            .hamburger.active .line:nth-child(2) { opacity: 0; }
+            .hamburger.active .line:nth-child(3) { transform: rotate(45deg) translate(-5px, -6px); }
+
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.1rem; }
+            
+            .typing-text {
+                white-space: normal;
+                border-right: none;
+                animation: fadeInUp 1s ease forwards;
+                width: 100%;
+            }
+
+            .timeline::before { left: 15px; }
+            .timeline-dot { left: 6px; }
+            .timeline-item { padding-left: 40px; }
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
         <div class="logo">WW2 History</div>
         <ul class="nav-links">
             <li><a href="#" onclick="showPage('home')" class="active">Home</a></li>
-            <li><a href="america-joins.html">America Enters</a></li>
+            <li><a href="#" onclick="showPage('america')">America Enters</a></li>
             <!-- Future links will go here -->
         </ul>
         <div class="hamburger">
@@ -39,13 +576,13 @@
             </section>
 
             <section class="topics-grid">
-                <a href="america-joins.html" class="topic-card hidden delay-1">
+                <div class="topic-card hidden delay-1" onclick="showPage('america')">
                     <div class="card-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Pearl_Harbor_bombing.jpg/800px-Pearl_Harbor_bombing.jpg');"></div>
                     <div class="card-content">
                         <h3>America Enters the War</h3>
                         <p>Discover how the unprovoked attack on Pearl Harbor thrust the United States into the global conflict.</p>
                     </div>
-                </a>
+                </div>
                 
                 <div class="topic-card disabled hidden delay-2">
                     <div class="card-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/D-Day_landing_at_Normandy.jpg/800px-D-Day_landing_at_Normandy.jpg');"></div>
@@ -66,11 +603,165 @@
         </main>
     </div>
 
+    <div id="america-page" class="page">
+        <header class="hero" id="america-hero">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1 class="slide-in-left">A Date Which Will Live in Infamy</h1>
+                <p class="fade-in-up delay-1">December 7, 1941</p>
+            </div>
+            <div class="scroll-indicator">
+                <div class="mouse"></div>
+            </div>
+        </header>
+
+        <main class="timeline-container">
+            
+            <section class="content-section text-center hidden">
+                <h2 class="section-title">The Path to War</h2>
+                <p class="lead-text">For years, the United States maintained a policy of isolationism while supporting the Allies through the Lend-Lease Act. However, rising tensions with Imperial Japan over embargoes in the Pacific set the stage for a dramatic shift.</p>
+            </section>
+
+            <div class="timeline">
+                <div class="timeline-item hidden">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Morning of Dec 7, 1941</h3>
+                        <h4>The Attack on Pearl Harbor</h4>
+                        <p>In a surprise military strike, the Imperial Japanese Navy Air Service attacked the United States naval base at Pearl Harbor in Honolulu, Hawaii. The attack killed 2,403 U.S. personnel and destroyed or damaged 19 U.S. Navy ships.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item hidden">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Dec 8, 1941</h3>
+                        <h4>Declaration of War</h4>
+                        <p>President Franklin D. Roosevelt addressed Congress, calling December 7 "a date which will live in infamy." Congress officially declared war on the Empire of Japan, officially bringing the U.S. into World War II.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item hidden">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Dec 11, 1941</h3>
+                        <h4>The Conflict Expands</h4>
+                        <p>Honoring their Tripartite Pact with Japan, Germany and Italy declared war on the United States. The U.S. responded in kind, fully engaging in the global conflict across both the European and Pacific theaters.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item hidden">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>1942 and Beyond</h3>
+                        <h4>Mobilization and Industry</h4>
+                        <p>The U.S. economy transformed entirely. Factories shifted from producing consumer goods to building tanks, planes, and ships. Millions of Americans, including women (epitomized by Rosie the Riveter), entered the workforce to support the war effort.</p>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
 
     <footer>
         <p>&copy; 2026 WW2 Interactive History. All rights reserved.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Page switching function
+            window.showPage = function(page) {
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                document.getElementById(page + '-page').classList.add('active');
+                
+                // Update nav active
+                document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+                if (page === 'home') {
+                    document.querySelector('a[onclick*="home"]').classList.add('active');
+                } else if (page === 'america') {
+                    document.querySelector('a[onclick*="america"]').classList.add('active');
+                }
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                // Re-observe hidden elements for animations
+                const hiddenElements = document.querySelectorAll('.hidden');
+                hiddenElements.forEach(el => {
+                    el.classList.remove('show');
+                    observer.observe(el);
+                });
+            };
+
+            // Navbar Scroll Effect
+            const navbar = document.querySelector('.navbar');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Mobile Menu Toggle
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+
+            if (hamburger) {
+                hamburger.addEventListener('click', () => {
+                    navLinks.classList.toggle('active');
+                    hamburger.classList.toggle('active');
+                });
+            }
+
+            // Intersection Observer for scroll animations
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                        observer.unobserve(entry.target); // Stop observing once it's shown
+                    }
+                });
+            }, observerOptions);
+
+            const hiddenElements = document.querySelectorAll('.hidden');
+            hiddenElements.forEach(el => observer.observe(el));
+
+            // Typing effect for long texts on mobile fallback
+            const typingElement = document.querySelector('.typing-text');
+            if (typingElement && window.innerWidth <= 768) {
+                typingElement.style.whiteSpace = 'normal';
+                typingElement.style.borderRight = 'none';
+            }
+
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if(targetId === '#') return;
+                    const targetElement = document.querySelector(targetId);
+                    if(targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                    // Close mobile menu if open
+                    if(navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        hamburger.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
