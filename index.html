@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World War II: The Global Conflict</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">WW2 History</div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="america-joins.html">America Enters</a></li>
+            <!-- Future links will go here -->
+        </ul>
+        <div class="hamburger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </nav>
+
+    <header class="hero" id="home-hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="typing-text">The Deadliest Conflict in Human History</h1>
+            <p class="fade-in-up delay-1">1939 - 1945</p>
+            <a href="#explore" class="btn fade-in-up delay-2">Explore the Timeline</a>
+        </div>
+    </header>
+
+    <main id="explore">
+        <section class="intro content-section hidden">
+            <h2>A World Torn Apart</h2>
+            <p>World War II involved the vast majority of the world's countries—including all the great powers—forming two opposing military alliances: the Allies and the Axis. In a state of total war, directly involving more than 100 million personnel from more than 30 countries, the major participants threw their entire economic, industrial, and scientific capabilities behind the war effort.</p>
+        </section>
+
+        <section class="topics-grid">
+            <a href="america-joins.html" class="topic-card hidden delay-1">
+                <div class="card-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Pearl_Harbor_bombing.jpg/800px-Pearl_Harbor_bombing.jpg');"></div>
+                <div class="card-content">
+                    <h3>America Enters the War</h3>
+                    <p>Discover how the unprovoked attack on Pearl Harbor thrust the United States into the global conflict.</p>
+                </div>
+            </a>
+            
+            <div class="topic-card disabled hidden delay-2">
+                <div class="card-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/D-Day_landing_at_Normandy.jpg/800px-D-Day_landing_at_Normandy.jpg');"></div>
+                <div class="card-content">
+                    <h3>The European Theater</h3>
+                    <p>Coming Soon. Explore the battles that shaped the liberation of Europe.</p>
+                </div>
+            </div>
+
+            <div class="topic-card disabled hidden delay-3">
+                <div class="card-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Atomic_bomb_1945_mission_patch.jpg/800px-Atomic_bomb_1945_mission_patch.jpg');"></div>
+                <div class="card-content">
+                    <h3>The Pacific Theater</h3>
+                    <p>Coming Soon. Journey through the island-hopping campaigns and the war's dramatic end.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 WW2 Interactive History. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
