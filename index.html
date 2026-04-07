@@ -224,6 +224,12 @@
             100% { transform: translate(-50%, 20px); opacity: 0; }
         }
 
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
         /* Main Content */
         main {
             padding: 4rem 5%;
@@ -297,7 +303,7 @@
 
         .topic-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 20px var(--accent-color);
         }
 
         .topic-card.disabled {
@@ -376,6 +382,7 @@
             top: 5px;
             box-shadow: 0 0 10px var(--accent-color);
             transition: transform 0.3s ease;
+            animation: pulse 2s infinite;
         }
 
         .timeline-item:hover .timeline-dot {
@@ -432,6 +439,9 @@
             color: #555;
             font-size: 0.9rem;
             border-top: 1px solid #222;
+            animation: fadeInUp 1s ease forwards;
+            opacity: 0;
+            animation-delay: 0.5s;
         }
 
         /* Animations */
@@ -563,7 +573,7 @@
         <header class="hero" id="home-hero">
             <div class="hero-overlay"></div>
             <div class="hero-content">
-                <h1 class="typing-text">The Deadliest Conflict in Human History</h1>
+                <h1 class="typing-text">The Deadliest<br>Conflict in Human History</h1>
                 <p class="fade-in-up delay-1">1939 - 1945</p>
                 <a href="#explore" class="btn fade-in-up delay-2">Explore the Timeline</a>
             </div>
@@ -701,6 +711,26 @@
                     navbar.classList.add('scrolled');
                 } else {
                     navbar.classList.remove('scrolled');
+                }
+                
+                // Fade out scroll indicator on America page
+                const scrollIndicator = document.querySelector('.scroll-indicator');
+                if (scrollIndicator) {
+                    if (window.scrollY > 200) {
+                        scrollIndicator.style.opacity = '0';
+                        scrollIndicator.style.pointerEvents = 'none';
+                    } else {
+                        scrollIndicator.style.opacity = '1';
+                        scrollIndicator.style.pointerEvents = 'auto';
+                    }
+                }
+                
+                // Parallax effect for hero background
+                const hero = document.querySelector('.hero');
+                if (hero) {
+                    const scrolled = window.pageYOffset;
+                    const rate = scrolled * -0.3;
+                    hero.style.backgroundPositionY = rate + 'px';
                 }
             });
 
