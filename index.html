@@ -515,10 +515,12 @@
 
         /* Leaders Grid */
         .leaders-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
             padding: 4rem 5%;
+            max-width: 900px;
+            margin: 0 auto;
         }
 
         .leader-card {
@@ -528,7 +530,8 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             transition: transform 0.4s ease, box-shadow 0.4s ease;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
+            align-items: center;
         }
 
         .leader-card:hover {
@@ -537,9 +540,11 @@
         }
 
         .leader-portrait {
-            height: 250px;
+            width: 300px;
+            height: 300px;
             overflow: hidden;
             position: relative;
+            flex-shrink: 0;
         }
 
         .leader-portrait img {
@@ -554,20 +559,20 @@
         }
 
         .leader-info {
-            padding: 1.5rem;
+            padding: 2rem;
             flex-grow: 1;
         }
 
         .leader-info h3 {
             color: #fff;
             margin-bottom: 1rem;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
         }
 
         .leader-info p {
             color: #aaa;
             line-height: 1.6;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
         }
 
         .leader-info audio {
@@ -756,7 +761,7 @@
             <section class="leaders-grid">
                 <div class="leader-card hidden delay-1">
                     <div class="leader-portrait">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Franklin_D._Roosevelt_-_NARA_-_196715.jpg/400px-Franklin_D._Roosevelt_-_NARA_-_196715.jpg" alt="Franklin D. Roosevelt">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDVUzmKuYr9-q94Ri9In-OzGk9aWMU4nyYePDfeJ_mo_fII8Ng" alt="Franklin D. Roosevelt">
                     </div>
                     <div class="leader-info">
                         <h3>Franklin D. Roosevelt</h3>
@@ -764,7 +769,7 @@
                         <p><strong>Rise to Power:</strong> Elected in 1932 during the Great Depression, served four terms as President.</p>
                         <p>Roosevelt led the US through the New Deal and into WWII after Pearl Harbor.</p>
                         <audio controls>
-                            <source src="https://archive.org/download/PearlHarborAddress/PearlHarborAddress.mp3" type="audio/mpeg">
+                            <source src="https://archive.org/download/FDRPearlHarborSpeech/FDR_Pearl_Harbor_Speech.mp3" type="audio/mpeg">
                             Your browser does not support the audio element.
                         </audio>
                     </div>
@@ -772,7 +777,7 @@
 
                 <div class="leader-card hidden delay-2">
                     <div class="leader-portrait">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Sir_Winston_Churchill_-_19086236948.jpg/400px-Sir_Winston_Churchill_-_19086236948.jpg" alt="Winston Churchill">
+                        <img src="https://images.immediate.co.uk/production/volatile/sites/7/2019/05/GettyImages-515204596-1049a45.jpg?quality=90&resize=620,414" alt="Winston Churchill">
                     </div>
                     <div class="leader-info">
                         <h3>Winston Churchill</h3>
@@ -780,7 +785,7 @@
                         <p><strong>Rise to Power:</strong> Became PM in 1940 after Chamberlain's resignation during WWII.</p>
                         <p>Known for his inspiring speeches and leadership against Nazi Germany.</p>
                         <audio controls>
-                            <source src="https://ia802609.us.archive.org/35/items/WinstonChurchillWeShallFightOnTheBeaches/Winston%20Churchill%20-%20We%20Shall%20Fight%20on%20the%20Beaches.mp3" type="audio/mpeg">
+                            <source src="https://archive.org/download/WinstonChurchillWeShallFightOnTheBeaches/We_Shall_Fight_on_the_Beaches.mp3" type="audio/mpeg">
                             Your browser does not support the audio element.
                         </audio>
                     </div>
@@ -788,7 +793,7 @@
 
                 <div class="leader-card hidden delay-3">
                     <div class="leader-portrait">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Joseph_Stalin_1942.jpg/400px-Joseph_Stalin_1942.jpg" alt="Joseph Stalin">
+                        <img src="https://cdn.britannica.com/50/221250-138-7BA5F519/who-was-Joseph-Stalin.jpg?w=800&h=450&c=crop" alt="Joseph Stalin">
                     </div>
                     <div class="leader-info">
                         <h3>Joseph Stalin</h3>
@@ -796,7 +801,7 @@
                         <p><strong>Rise to Power:</strong> Became leader after Lenin's death in 1924, consolidated power through purges.</p>
                         <p>Led the USSR through industrialization and WWII against Germany.</p>
                         <audio controls>
-                            <source src="https://archive.org/download/StalinSpeech/StalinSpeech.mp3" type="audio/mpeg">
+                            <source src="https://archive.org/download/StalinSpeech/Stalin_Speech.mp3" type="audio/mpeg">
                             Your browser does not support the audio element.
                         </audio>
                     </div>
@@ -804,7 +809,7 @@
 
                 <div class="leader-card hidden delay-4">
                     <div class="leader-portrait">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Hitler_portrait_crop.jpg/400px-Hitler_portrait_crop.jpg" alt="Adolf Hitler">
+                        <img src="https://res.cloudinary.com/aenetworks/image/upload/c_fill,ar_2,w_3840,h_1920,g_auto/dpr_auto/f_auto/q_auto:eco/v1/adolf-hitler-gettyimages-119505258" alt="Adolf Hitler">
                     </div>
                     <div class="leader-info">
                         <h3>Adolf Hitler</h3>
@@ -812,7 +817,7 @@
                         <p><strong>Rise to Power:</strong> Joined Nazi Party in 1919, became Chancellor in 1933, dictator by 1934.</p>
                         <p>Initiated WWII by invading Poland, responsible for the Holocaust.</p>
                         <audio controls>
-                            <source src="https://archive.org/download/HitlerSpeech/HitlerSpeech.mp3" type="audio/mpeg">
+                            <source src="https://archive.org/download/HitlerSpeech/Hitler_Speech.mp3" type="audio/mpeg">
                             Your browser does not support the audio element.
                         </audio>
                     </div>
@@ -820,7 +825,7 @@
 
                 <div class="leader-card hidden delay-5">
                     <div class="leader-portrait">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Benito_Mussolini_1930s.jpg/400px-Benito_Mussolini_1930s.jpg" alt="Benito Mussolini">
+                        <img src="https://res.cloudinary.com/aenetworks/image/upload/c_fill,ar_2,w_3840,h_1920,g_auto/dpr_auto/f_auto/q_auto:eco/v1/mussolini" alt="Benito Mussolini">
                     </div>
                     <div class="leader-info">
                         <h3>Benito Mussolini</h3>
@@ -828,7 +833,7 @@
                         <p><strong>Rise to Power:</strong> Founded Fasci Italiani in 1919, became Prime Minister in 1922 via March on Rome.</p>
                         <p>Ally of Hitler, entered WWII in 1940, deposed in 1943.</p>
                         <audio controls>
-                            <source src="https://archive.org/download/MussoliniSpeech/MussoliniSpeech.mp3" type="audio/mpeg">
+                            <source src="https://archive.org/download/MussoliniSpeech/Mussolini_Speech.mp3" type="audio/mpeg">
                             Your browser does not support the audio element.
                         </audio>
                     </div>
