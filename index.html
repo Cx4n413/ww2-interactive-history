@@ -705,6 +705,7 @@
 
             // Navbar Scroll Effect
             const navbar = document.querySelector('.navbar');
+            let scrollIndicatorHidden = false;
             
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 50) {
@@ -713,16 +714,12 @@
                     navbar.classList.remove('scrolled');
                 }
                 
-                // Fade out scroll indicator on America page
+                // Fade out scroll indicator on America page permanently
                 const scrollIndicator = document.querySelector('.scroll-indicator');
-                if (scrollIndicator) {
-                    if (window.scrollY > 200) {
-                        scrollIndicator.style.opacity = '0';
-                        scrollIndicator.style.pointerEvents = 'none';
-                    } else {
-                        scrollIndicator.style.opacity = '1';
-                        scrollIndicator.style.pointerEvents = 'auto';
-                    }
+                if (scrollIndicator && !scrollIndicatorHidden && window.scrollY > 200) {
+                    scrollIndicator.style.opacity = '0';
+                    scrollIndicator.style.pointerEvents = 'none';
+                    scrollIndicatorHidden = true;
                 }
                 
                 // Parallax effect for hero background
