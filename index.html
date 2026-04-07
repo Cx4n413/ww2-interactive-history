@@ -138,7 +138,11 @@
         }
 
         #america-hero {
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Pearl_Harbor_bombing.jpg/1920px-Pearl_Harbor_bombing.jpg');
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Pearl_Harbor_bombing.jpg/800px-Pearl_Harbor_bombing.jpg');
+        }
+
+        #leaders-hero {
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Yalta_summit_1945_with_Churchill%2C_Roosevelt%2C_Stalin.jpg/1200px-Yalta_summit_1945_with_Churchill%2C_Roosevelt%2C_Stalin.jpg');
         }
 
         .hero-overlay {
@@ -509,8 +513,67 @@
             display: block;
         }
 
-        /* Responsive */
-        @media screen and (max-width: 768px) {
+        /* Leaders Grid */
+        .leaders-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 4rem 5%;
+        }
+
+        .leader-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .leader-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 20px var(--accent-color);
+        }
+
+        .leader-portrait {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .leader-portrait img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .leader-card:hover .leader-portrait img {
+            transform: scale(1.05);
+        }
+
+        .leader-info {
+            padding: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .leader-info h3 {
+            color: #fff;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .leader-info p {
+            color: #aaa;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+
+        .leader-info audio {
+            width: 100%;
+            margin-top: 1rem;
+        }
             .nav-links {
                 position: fixed;
                 right: -100%;
@@ -560,7 +623,7 @@
         <ul class="nav-links">
             <li><a href="#" onclick="showPage('home')" class="active">Home</a></li>
             <li><a href="#" onclick="showPage('america')">America Enters</a></li>
-            <!-- Future links will go here -->
+            <li><a href="#" onclick="showPage('leaders')">World Leaders</a></li>
         </ul>
         <div class="hamburger">
             <div class="line"></div>
@@ -575,7 +638,7 @@
             <div class="hero-content">
                 <h1 class="typing-text">The Deadliest<br>Conflict in Human History</h1>
                 <p class="fade-in-up delay-1">Yes, I coded all of this and it took forever.</p>
-                <a href="#explore" class="btn fade-in-up delay-2">Explore the Timeline</a>
+                <a href="#" onclick="showPage('america')" class="btn fade-in-up delay-2">Explore the Timeline</a>
             </div>
         </header>
 
@@ -629,16 +692,16 @@
             
             <section class="content-section text-center hidden">
                 <h2 class="section-title">The Path to War</h2>
-                <p class="lead-text">For years, the United States maintained a policy of isolationism while supporting the Allies through the Lend-Lease Act. However, rising tensions with Imperial Japan over embargoes in the Pacific set the stage for a dramatic shift.</p>
+                <p class="lead-text">For years, the U.S had a policy of isolationism while supporting the Allies from the sidelines. However, rising tensions with Japan over embargoes set the stage for the U.S to jump in.</p>
             </section>
 
             <div class="timeline">
                 <div class="timeline-item hidden">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
-                        <h3>Morning of Dec 7, 1941</h3>
-                        <h4>The Attack on Pearl Harbor</h4>
-                        <p>In a surprise military strike, the Imperial Japanese Navy Air Service attacked the United States naval base at Pearl Harbor in Honolulu, Hawaii. The attack killed 2,403 U.S. personnel and destroyed or damaged 19 U.S. Navy ships.</p>
+                        <h3>Dec 7, 1941</h3>
+                        <h4>Pearl Harbor</h4>
+                        <p>In a surprise military strike, the Japanese Air Service attacked the U.S base at Pearl Harbor in Honolulu, Hawaii. The attack killed 2,403 U.S. staff and damaged 19 Navy ships.</p>
                     </div>
                 </div>
                 
@@ -646,8 +709,8 @@
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
                         <h3>Dec 8, 1941</h3>
-                        <h4>Declaration of War</h4>
-                        <p>President Franklin D. Roosevelt addressed Congress, calling December 7 "a date which will live in infamy." Congress officially declared war on the Empire of Japan, officially bringing the U.S. into World War II.</p>
+                        <h4>The U.S Declares War</h4>
+                        <p>Franklin D. Roosevelt addressed Congress, calling December 7 "a date which will live in infamy." Congress officially declared war on Japan, bringing the U.S. into World War 2.</p>
                     </div>
                 </div>
 
@@ -656,7 +719,7 @@
                     <div class="timeline-content">
                         <h3>Dec 11, 1941</h3>
                         <h4>The Conflict Expands</h4>
-                        <p>Honoring their Tripartite Pact with Japan, Germany and Italy declared war on the United States. The U.S. responded in kind, fully engaging in the global conflict across both the European and Pacific theaters.</p>
+                        <p>Due to their Tripartite Pact with Japan, Germany and Italy declared war on the United States. The U.S. responded by fully engaging in the war across both the European and Pacific.</p>
                     </div>
                 </div>
 
@@ -664,8 +727,8 @@
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
                         <h3>1942 and Beyond</h3>
-                        <h4>Mobilization and Industry</h4>
-                        <p>The U.S. economy transformed entirely. Factories shifted from producing consumer goods to building tanks, planes, and ships. Millions of Americans, including women (epitomized by Rosie the Riveter), entered the workforce to support the war effort.</p>
+                        <h4>The War Economy</h4>
+                        <p>The U.S. economy transformed. Factories shifted from producing regular goods to building tanks, planes, and ships. Millions of Americans, including women, entered the workforce to support the war effort.</p>
                     </div>
                 </div>
             </div>
@@ -673,8 +736,109 @@
         </main>
     </div>
 
+    <div id="leaders-page" class="page">
+        <header class="hero" id="leaders-hero">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1 class="slide-in-left">Leaders of World War II</h1>
+                <p class="fade-in-up delay-1">The Men Who Shaped History</p>
+            </div>
+        </header>
+
+        <main>
+            <section class="leaders-section hidden">
+                <div class="container">
+                    <h2>The Key Figures</h2>
+                    <p class="lead-text">These leaders rose to power during turbulent times, shaping the course of the war through their decisions, ideologies, and speeches.</p>
+                </div>
+            </section>
+
+            <section class="leaders-grid">
+                <div class="leader-card hidden delay-1">
+                    <div class="leader-portrait">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Franklin_D._Roosevelt_-_NARA_-_196715.jpg/400px-Franklin_D._Roosevelt_-_NARA_-_196715.jpg" alt="Franklin D. Roosevelt">
+                    </div>
+                    <div class="leader-info">
+                        <h3>Franklin D. Roosevelt</h3>
+                        <p><strong>Government:</strong> Democratic President of the United States</p>
+                        <p><strong>Rise to Power:</strong> Elected in 1932 during the Great Depression, served four terms as President.</p>
+                        <p>Roosevelt led the US through the New Deal and into WWII after Pearl Harbor.</p>
+                        <audio controls>
+                            <source src="https://archive.org/download/PearlHarborAddress/PearlHarborAddress.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+
+                <div class="leader-card hidden delay-2">
+                    <div class="leader-portrait">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Sir_Winston_Churchill_-_19086236948.jpg/400px-Sir_Winston_Churchill_-_19086236948.jpg" alt="Winston Churchill">
+                    </div>
+                    <div class="leader-info">
+                        <h3>Winston Churchill</h3>
+                        <p><strong>Government:</strong> Conservative Prime Minister of the United Kingdom</p>
+                        <p><strong>Rise to Power:</strong> Became PM in 1940 after Chamberlain's resignation during WWII.</p>
+                        <p>Known for his inspiring speeches and leadership against Nazi Germany.</p>
+                        <audio controls>
+                            <source src="https://ia802609.us.archive.org/35/items/WinstonChurchillWeShallFightOnTheBeaches/Winston%20Churchill%20-%20We%20Shall%20Fight%20on%20the%20Beaches.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+
+                <div class="leader-card hidden delay-3">
+                    <div class="leader-portrait">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Joseph_Stalin_1942.jpg/400px-Joseph_Stalin_1942.jpg" alt="Joseph Stalin">
+                    </div>
+                    <div class="leader-info">
+                        <h3>Joseph Stalin</h3>
+                        <p><strong>Government:</strong> Communist General Secretary of the Soviet Union</p>
+                        <p><strong>Rise to Power:</strong> Became leader after Lenin's death in 1924, consolidated power through purges.</p>
+                        <p>Led the USSR through industrialization and WWII against Germany.</p>
+                        <audio controls>
+                            <source src="https://archive.org/download/StalinSpeech/StalinSpeech.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+
+                <div class="leader-card hidden delay-4">
+                    <div class="leader-portrait">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Hitler_portrait_crop.jpg/400px-Hitler_portrait_crop.jpg" alt="Adolf Hitler">
+                    </div>
+                    <div class="leader-info">
+                        <h3>Adolf Hitler</h3>
+                        <p><strong>Government:</strong> Führer of Nazi Germany</p>
+                        <p><strong>Rise to Power:</strong> Joined Nazi Party in 1919, became Chancellor in 1933, dictator by 1934.</p>
+                        <p>Initiated WWII by invading Poland, responsible for the Holocaust.</p>
+                        <audio controls>
+                            <source src="https://archive.org/download/HitlerSpeech/HitlerSpeech.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+
+                <div class="leader-card hidden delay-5">
+                    <div class="leader-portrait">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Benito_Mussolini_1930s.jpg/400px-Benito_Mussolini_1930s.jpg" alt="Benito Mussolini">
+                    </div>
+                    <div class="leader-info">
+                        <h3>Benito Mussolini</h3>
+                        <p><strong>Government:</strong> Fascist Duce of Italy</p>
+                        <p><strong>Rise to Power:</strong> Founded Fasci Italiani in 1919, became Prime Minister in 1922 via March on Rome.</p>
+                        <p>Ally of Hitler, entered WWII in 1940, deposed in 1943.</p>
+                        <audio controls>
+                            <source src="https://archive.org/download/MussoliniSpeech/MussoliniSpeech.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
     <footer>
-        <p>&copy; 2026 WW2 Interactive History. All rights reserved.</p>
+        <p>&copy; 2026 Nathaniel Naik. No rights reserved because I'm too lazy to do that.</p>
     </footer>
 
     <script>
@@ -690,6 +854,8 @@
                     document.querySelector('a[onclick*="home"]').classList.add('active');
                 } else if (page === 'america') {
                     document.querySelector('a[onclick*="america"]').classList.add('active');
+                } else if (page === 'leaders') {
+                    document.querySelector('a[onclick*="leaders"]').classList.add('active');
                 }
                 
                 // Scroll to top
