@@ -513,6 +513,40 @@
             display: block;
         }
 
+        /* Leaders Section */
+        .leaders-section {
+            text-align: center;
+            padding: 2rem 5%;
+            margin-bottom: 3rem;
+        }
+
+        .leaders-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+            position: relative;
+            display: inline-block;
+        }
+
+        .leaders-section h2::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background: var(--accent-color);
+            bottom: -10px;
+            left: 25%;
+        }
+
+        .leaders-section p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #bbb;
+            max-width: 800px;
+            margin: 0 auto;
+            font-family: var(--font-body);
+        }
+
         /* Leaders Grid */
         .leaders-grid {
             display: flex;
@@ -552,6 +586,7 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
+            border-radius: 8px;
         }
 
         .leader-card:hover .leader-portrait img {
@@ -765,9 +800,9 @@
                     </div>
                     <div class="leader-info">
                         <h3>Franklin D. Roosevelt</h3>
-                        <p><strong>Government:</strong> Democratic President of the United States</p>
-                        <p><strong>Rise to Power:</strong> Elected in 1932 during the Great Depression, served four terms as President.</p>
-                        <p>Roosevelt led the US through the New Deal and into WWII after Pearl Harbor.</p>
+                        <p><strong>Government:</strong> Democratic President of the United States (1933-1945)</p>
+                        <p><strong>Rise to Power:</strong> Elected in 1932 during the Great Depression, implemented the New Deal to combat economic crisis. Won unprecedented four terms as President.</p>
+                        <p><strong>Role in WWII:</strong> Initially maintained US neutrality but provided aid to Allies through Lend-Lease. After Pearl Harbor attack, declared war on Japan, then Germany and Italy. Led the US through the war, forming alliances with Churchill and Stalin.</p>
                         <audio controls>
                             <source src="https://archive.org/download/FDRPearlHarborSpeech/FDR_Pearl_Harbor_Speech.mp3" type="audio/mpeg">
                             Your browser does not support the audio element.
@@ -777,13 +812,13 @@
 
                 <div class="leader-card hidden delay-2">
                     <div class="leader-portrait">
-                        <img src="https://images.immediate.co.uk/production/volatile/sites/7/2019/05/GettyImages-515204596-1049a45.jpg?quality=90&resize=620,414" alt="Winston Churchill">
+                        <img src="https://cdn.britannica.com/35/7535-050-06374DF8/Winston-Churchill-Yousuf-Karsh-1941.jpg?w=400&h=300&c=crop" alt="Winston Churchill">
                     </div>
                     <div class="leader-info">
                         <h3>Winston Churchill</h3>
-                        <p><strong>Government:</strong> Conservative Prime Minister of the United Kingdom</p>
-                        <p><strong>Rise to Power:</strong> Became PM in 1940 after Chamberlain's resignation during WWII.</p>
-                        <p>Known for his inspiring speeches and leadership against Nazi Germany.</p>
+                        <p><strong>Government:</strong> Conservative Prime Minister of the United Kingdom (1940-1945, 1951-1955)</p>
+                        <p><strong>Rise to Power:</strong> Served in various government positions, became PM after Neville Chamberlain's resignation in 1940 due to failure of appeasement policy.</p>
+                        <p><strong>Role in WWII:</strong> Famous for his "We shall fight on the beaches" speech. Led Britain through the Blitz and D-Day invasion. Key figure in Allied strategy, working closely with Roosevelt and Stalin.</p>
                         <audio controls>
                             <source src="https://archive.org/download/WinstonChurchillWeShallFightOnTheBeaches/We_Shall_Fight_on_the_Beaches.mp3" type="audio/mpeg">
                             Your browser does not support the audio element.
@@ -797,9 +832,9 @@
                     </div>
                     <div class="leader-info">
                         <h3>Joseph Stalin</h3>
-                        <p><strong>Government:</strong> Communist General Secretary of the Soviet Union</p>
-                        <p><strong>Rise to Power:</strong> Became leader after Lenin's death in 1924, consolidated power through purges.</p>
-                        <p>Led the USSR through industrialization and WWII against Germany.</p>
+                        <p><strong>Government:</strong> General Secretary of the Communist Party of the Soviet Union (1922-1953)</p>
+                        <p><strong>Rise to Power:</strong> Became General Secretary in 1922, outmaneuvered rivals like Trotsky through political purges and the Great Purge of 1936-1938.</p>
+                        <p><strong>Role in WWII:</strong> Signed non-aggression pact with Hitler in 1939, but invaded by Germany in 1941. Led the USSR's defense, turning the tide at Stalingrad. Key at Tehran and Yalta conferences, shaping post-war Europe.</p>
                         <audio controls>
                             <source src="https://archive.org/download/StalinSpeech/Stalin_Speech.mp3" type="audio/mpeg">
                             Your browser does not support the audio element.
@@ -813,9 +848,9 @@
                     </div>
                     <div class="leader-info">
                         <h3>Adolf Hitler</h3>
-                        <p><strong>Government:</strong> Führer of Nazi Germany</p>
-                        <p><strong>Rise to Power:</strong> Joined Nazi Party in 1919, became Chancellor in 1933, dictator by 1934.</p>
-                        <p>Initiated WWII by invading Poland, responsible for the Holocaust.</p>
+                        <p><strong>Government:</strong> Führer of Nazi Germany (1934-1945)</p>
+                        <p><strong>Rise to Power:</strong> Joined German Workers' Party in 1919, renamed it Nazi Party. Became Chancellor in 1933 through democratic election, then Reichstag Fire led to Enabling Act making him dictator.</p>
+                        <p><strong>Role in WWII:</strong> Initiated war by invading Poland in 1939. Implemented Holocaust, killing 6 million Jews. Committed suicide in 1945 as Berlin fell.</p>
                         <audio controls>
                             <source src="https://archive.org/download/HitlerSpeech/Hitler_Speech.mp3" type="audio/mpeg">
                             Your browser does not support the audio element.
@@ -829,9 +864,9 @@
                     </div>
                     <div class="leader-info">
                         <h3>Benito Mussolini</h3>
-                        <p><strong>Government:</strong> Fascist Duce of Italy</p>
-                        <p><strong>Rise to Power:</strong> Founded Fasci Italiani in 1919, became Prime Minister in 1922 via March on Rome.</p>
-                        <p>Ally of Hitler, entered WWII in 1940, deposed in 1943.</p>
+                        <p><strong>Government:</strong> Duce of Fascist Italy (1922-1943)</p>
+                        <p><strong>Rise to Power:</strong> Founded Fasci Italiani di Combattimento in 1919. Led March on Rome in 1922, appointed PM by King Victor Emmanuel III.</p>
+                        <p><strong>Role in WWII:</strong> Ally of Hitler, invaded Ethiopia and Albania. Entered WWII in 1940 but suffered defeats. Deposed in 1943, executed by partisans in 1945.</p>
                         <audio controls>
                             <source src="https://archive.org/download/MussoliniSpeech/Mussolini_Speech.mp3" type="audio/mpeg">
                             Your browser does not support the audio element.
