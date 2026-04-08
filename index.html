@@ -421,8 +421,18 @@
             width: 2px;
             background: #333;
             top: 0;
-            bottom: 0;
             left: 20px;
+            height: 100%;
+        }
+
+        .timeline-progress {
+            position: absolute;
+            width: 2px;
+            background: var(--accent-color);
+            top: 0;
+            left: 20px;
+            height: 0;
+            transition: height 0.1s linear;
         }
 
         .timeline-item {
@@ -518,6 +528,27 @@
             filter: blur(0);
         }
 
+        /* Leader Card Specific Animations */
+        .leader-card.hidden {
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+            opacity: 1;
+        }
+
+        .leader-card .leader-portrait,
+        .leader-card .leader-info {
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s, opacity 0.8s ease-out 0.3s;
+        }
+
+        .leader-card.hidden .leader-portrait {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+        .leader-card.hidden .leader-info {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+
         .fade-in-up {
             animation: fadeInUp 1s ease forwards;
             opacity: 0;
@@ -560,19 +591,6 @@
         @keyframes blink-caret {
             from, to { border-color: transparent }
             50% { border-color: var(--accent-color); }
-        }
-
-        @keyframes grain {
-            0%, 100% { transform: translate(0, 0); }
-            10% { transform: translate(-5%, -10%); }
-            20% { transform: translate(-15%, 5%); }
-            30% { transform: translate(7%, -25%); }
-            40% { transform: translate(-5%, 25%); }
-            50% { transform: translate(-15%, 10%); }
-            60% { transform: translate(15%, 0%); }
-            70% { transform: translate(0%, 15%); }
-            80% { transform: translate(3%, 35%); }
-            90% { transform: translate(-10%, 10%); }
         }
 
         /* Page Styles */
@@ -646,6 +664,7 @@
             display: flex;
             flex-direction: row;
             align-items: center;
+            overflow: hidden;
         }
 
         .leader-card:hover {
@@ -816,6 +835,7 @@
             </section>
 
             <div class="timeline">
+                <div class="timeline-progress"></div>
                 <div class="timeline-item hidden">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
@@ -1014,6 +1034,27 @@
                     const scrolled = window.pageYOffset;
                     const rate = scrolled * -0.3;
                     hero.style.backgroundPositionY = rate + 'px';
+                }
+
+                // Animated timeline
+                const timeline = document.querySelector('.timeline');
+                if (timeline) {
+                    const timelineProgress = timeline.querySelector('.timeline-progress');
+                    const timelineRect = timeline.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+                    const timelineItems = timeline.querySelectorAll('.timeline-item');
+                    if (timelineItems.length > 0) {
+                        const lastItem = timelineItems[timelineItems.length - 1];
+                        const lastItemRect = lastItem.getBoundingClientRect();
+                        
+                        if (timelineRect.top < windowHeight && lastItemRect.bottom > 0) {
+                            let totalHeight = lastItem.offsetTop + lastItem.clientHeight;
+                            let scrollPercent = ((windowHeight - timelineRect.top) / (windowHeight + timelineRect.height)) * 110; // Use 110 to ensure it completes
+                            scrollPercent = Math.min(100, Math.max(0, scrollPercent));
+                            
+                            timelineProgress.style.height = scrollPercent + '%';
+                        }
+                    }
                 }
             });
 
