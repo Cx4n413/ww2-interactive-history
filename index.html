@@ -36,6 +36,21 @@
             letter-spacing: 1px;
         }
 
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f1115;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-color);
+        }
+
         /* Navigation */
         .navbar {
             position: fixed;
@@ -151,7 +166,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(15,17,21,1) 100%);
+            background: radial-gradient(ellipse at bottom, rgba(15,17,21,0.8) 0%, rgba(0,0,0,0.6) 70%), linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(15,17,21,1) 100%);
         }
 
         .hero-content {
@@ -177,7 +192,7 @@
         .btn {
             display: inline-block;
             padding: 12px 30px;
-            background-color: var(--accent-color);
+            background: linear-gradient(45deg, var(--accent-color), #a32424);
             color: #fff;
             text-decoration: none;
             font-size: 1.1rem;
@@ -186,11 +201,28 @@
             transition: background 0.3s, transform 0.3s;
             border: 1px solid var(--accent-color);
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
 
         .btn:hover {
             background-color: transparent;
             transform: translateY(-3px);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         /* Scroll Indicator */
@@ -256,15 +288,21 @@
         .content-section h2::after {
             content: '';
             position: absolute;
-            width: 50%;
+            width: 0%;
             height: 3px;
             background: var(--accent-color);
             bottom: -10px;
             left: 0;
+            transition: width 0.8s ease 0.5s;
         }
 
         .text-center h2::after {
-            left: 25%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .show .content-section h2::after, .show .leaders-section h2::after {
+            width: 50%;
         }
 
         .content-section p {
@@ -292,7 +330,8 @@
         }
 
         .topic-card {
-            background: var(--card-bg);
+            background: linear-gradient(145deg, #1f2229, #171a21);
+            border: 1px solid #2a2d35;
             border-radius: 8px;
             overflow: hidden;
             text-decoration: none;
@@ -394,7 +433,8 @@
         }
 
         .timeline-content {
-            background: var(--card-bg);
+            background: linear-gradient(145deg, #1f2229, #171a21);
+            border: 1px solid #2a2d35;
             padding: 1.5rem;
             border-radius: 8px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
@@ -413,8 +453,8 @@
             height: 0;
             border-top: 10px solid transparent;
             border-bottom: 10px solid transparent;
-            border-right: 10px solid var(--card-bg);
-            left: -10px;
+            border-right: 10px solid #1f2229;
+            left: -11px;
             top: 5px;
         }
 
@@ -451,13 +491,15 @@
         /* Animations */
         .hidden {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transform: translateY(50px) scale(0.98);
+            filter: blur(3px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out, filter 0.8s ease-out;
         }
 
         .show {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
+            filter: blur(0);
         }
 
         .fade-in-up {
@@ -506,11 +548,19 @@
 
         /* Page Styles */
         .page {
-            display: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease-out, visibility 0.6s ease-out;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
         }
 
         .page.active {
-            display: block;
+            opacity: 1;
+            visibility: visible;
+            position: relative;
         }
 
         /* Leaders Section */
@@ -558,7 +608,8 @@
         }
 
         .leader-card {
-            background: var(--card-bg);
+            background: linear-gradient(145deg, #1f2229, #171a21);
+            border: 1px solid #2a2d35;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -804,7 +855,7 @@
                         <p><strong>Rise to Power:</strong> Elected in 1932 during the Great Depression, implemented the New Deal to combat economic crisis. Won unprecedented four terms as President.</p>
                         <p><strong>Role in WWII:</strong> Initially maintained US neutrality but provided aid to Allies through Lend-Lease. After Pearl Harbor attack, declared war on Japan, then Germany and Italy. Led the US through the war, forming alliances with Churchill and Stalin.</p>
                         <audio controls>
-                            <source src="https://archive.org/download/FDRPearlHarborSpeech/FDR_Pearl_Harbor_Speech.mp3" type="audio/mpeg">
+                            <source src="https://www.nps.gov/media/multimedia/valr/FDR_Infamy_Speech.mp3" type="audio/mpeg">
                             Your browser does not support the audio element.
                         </audio>
                     </div>
@@ -820,7 +871,7 @@
                         <p><strong>Rise to Power:</strong> Served in various government positions, became PM after Neville Chamberlain's resignation in 1940 due to failure of appeasement policy.</p>
                         <p><strong>Role in WWII:</strong> Famous for his "We shall fight on the beaches" speech. Led Britain through the Blitz and D-Day invasion. Key figure in Allied strategy, working closely with Roosevelt and Stalin.</p>
                         <audio controls>
-                            <source src="https://archive.org/download/WinstonChurchillWeShallFightOnTheBeaches/We_Shall_Fight_on_the_Beaches.mp3" type="audio/mpeg">
+                            <source src="https://upload.wikimedia.org/wikipedia/commons/4/41/Winston_Churchill_-_Beaches_Speech.ogg" type="audio/ogg">
                             Your browser does not support the audio element.
                         </audio>
                     </div>
@@ -836,7 +887,7 @@
                         <p><strong>Rise to Power:</strong> Became General Secretary in 1922, outmaneuvered rivals like Trotsky through political purges and the Great Purge of 1936-1938.</p>
                         <p><strong>Role in WWII:</strong> Signed non-aggression pact with Hitler in 1939, but invaded by Germany in 1941. Led the USSR's defense, turning the tide at Stalingrad. Key at Tehran and Yalta conferences, shaping post-war Europe.</p>
                         <audio controls>
-                            <source src="https://archive.org/download/StalinSpeech/Stalin_Speech.mp3" type="audio/mpeg">
+                            <source src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Stalin_speaks_on_German_Invasion_22_June_1941.ogg" type="audio/ogg">
                             Your browser does not support the audio element.
                         </audio>
                     </div>
@@ -852,7 +903,7 @@
                         <p><strong>Rise to Power:</strong> Joined German Workers' Party in 1919, renamed it Nazi Party. Became Chancellor in 1933 through democratic election, then Reichstag Fire led to Enabling Act making him dictator.</p>
                         <p><strong>Role in WWII:</strong> Initiated war by invading Poland in 1939. Implemented Holocaust, killing 6 million Jews. Committed suicide in 1945 as Berlin fell.</p>
                         <audio controls>
-                            <source src="https://archive.org/download/HitlerSpeech/Hitler_Speech.mp3" type="audio/mpeg">
+                            <source src="https://upload.wikimedia.org/wikipedia/commons/2/22/Hitler_declares_war_on_the_USA.ogg" type="audio/ogg">
                             Your browser does not support the audio element.
                         </audio>
                     </div>
@@ -868,7 +919,7 @@
                         <p><strong>Rise to Power:</strong> Founded Fasci Italiani di Combattimento in 1919. Led March on Rome in 1922, appointed PM by King Victor Emmanuel III.</p>
                         <p><strong>Role in WWII:</strong> Ally of Hitler, invaded Ethiopia and Albania. Entered WWII in 1940 but suffered defeats. Deposed in 1943, executed by partisans in 1945.</p>
                         <audio controls>
-                            <source src="https://archive.org/download/MussoliniSpeech/Mussolini_Speech.mp3" type="audio/mpeg">
+                            <source src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Benito_Mussolini_-_Dichiarazione_di_guerra_%2810_giugno_1940%29.ogg" type="audio/ogg">
                             Your browser does not support the audio element.
                         </audio>
                     </div>
