@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WW2 Interactive History</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&family=Special+Elite&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* General Reset & Variables */
         * {
@@ -14,13 +14,14 @@
         }
 
         :root {
-            --bg-color: #0f1115;
-            --text-color: #e0e0e0;
-            --accent-color: #c92a2a;
-            --card-bg: #1a1d24;
-            --nav-bg: rgba(15, 17, 21, 0.9);
-            --font-heading: 'Cinzel', serif;
-            --font-body: 'Lato', sans-serif;
+            --bg-color: #1c1a17;
+            --text-color: #d8d3c5;
+            --accent-color: #8b2525;
+            --card-bg: #27241e;
+            --nav-bg: rgba(28, 26, 23, 0.95);
+            --font-heading: 'Stardos Stencil', cursive;
+            --font-body: 'Courier Prime', monospace;
+            --font-typewriter: 'Special Elite', monospace;
         }
 
         body, html {
@@ -29,22 +30,41 @@
             color: var(--text-color);
             overflow-x: hidden;
             scroll-behavior: smooth;
-            background: #0f1115; /* Fallback */
-            background: radial-gradient(ellipse at center, #1a1d24 0%, #0f1115 100%);
+            background: var(--bg-color);
+            /* Concrete/Grunge Texture + Map Grid */
+            background-image: 
+            linear-gradient(rgba(20, 18, 16, 0.93), rgba(10, 9, 8, 0.98)),
+            url("https://i.ebayimg.com/images/g/9vUAAOSwLtFnw3F0/s-l1200.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-blend-mode: multiply;
         }
 
+        /* Animated Film Grain - Increased opacity and adjusted blend mode so it's actually visible */
         body::after {
             animation: grain 8s steps(10) infinite;
-            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiGAAABUFBMVEUAAAAzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzM+q9/vAAAAcXRSTlMAAQIDBAUGBwgJCgsMDQ4PEBESExQVFhcYGRobHB0eHx8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWltcXV5fYGFiY2RlZmdoaWprbG1ucHFzdHV2d3h5ent8fX5/f4DP9fUAAAMcSURBVEjHpZZZl6JAFEXBf20TAm3btm3btm3b1jZt2/Z/T8xMZhZJ4k1yee+385v5Zn5mNpNEgl4qVayKjL1SKz+aRB5P0zS8x4gJZRJ5/j+t4gmqZFLNBL1So3gg2YkOKZpIZgKeH4/HI/E4aUqRSCQYtgmmSCQZhsnhcCgUCgVej49HlFJkkanq8/kMDodLSUnpD0Wi2Wz2+XyWZfnp06fl5eXdbheJRH79+tVqtX6/37KsjFkvRFpC6bS0tFqtVjweF6S73W4mk2Gz2X6/l1UPQSjMLpfL5XLZbreWZVEU5Wq1qr3vbrdD9x1GkSgU2qS3o6OjVCrFGAYCgQ6Hw+FwqFQqDIORSIzH41KpBIANCHw+n8/n4+PjZrMZj8eLxaLT6TgcDoFAkM/nu90un8+r42c3Gg29DwKBEIZhWZbNZjMMQyqVwvf7zWaz2+12uVwMwyKRyGazWq0Wi8Vms8Visdvt9vv9KIqmafr9Ph6PF4vFYrFYLJaLxbjL6XRKJBIej4vH49FoNJvNyuVyPB63Wq0sj5/P55lMhlqtVqvVKIpMJkMqlXK5XKFQoBDw+v3+er0uFAoYhuF53u/3KxQK3t/fX1/fbrfboVDoD4VCIZGImM9mM5lMIpEIRVEURbvdDgQCHo+nUqnD4UAoFFqv12q1KhQKstlsNpslEglEIgKGYTweH41G3+/3uVwuFosolUqoA8fj8Xq9lpaWmEwmkUicn5/vdrvlcnlpaQkLg8FgMpnI5XJZlhUfMBgMBoPhdDoURclms8lkAmzjer0mk4nP54vF4vF4LBaLzWZFUbTbbZfLhSRNT9M0TdM0TdM0Teu/vN/vx58sFgtJEqFEIpFEo9FUKsVisUKhUChkvN/vV6vVarVarVar2WwWi8Vms9lsNqvVarVa7ff7arUajUbjcrkkSXfu3JmZmckyo0iUUkopZSKRiEQi3W43m810Op2maTwev9/vRVEUBEFVVTzP0zQ9Ho9f3d3d3d3d3t5eKpUyDAuFQjwe393dLSkpIQjC87womqZpCoX8/PxcLpcURflhMplwOCyXy0VRkCQplUqZTCaRSHiePz8/b7fbURQZhiGVSlEURVEQBEEQBEEQBEEQBEH9/d/u21prVRRFURRFUZRIpVItFsu/vQ+JRAJvGcaYTCaJRAIYgWEY3+/3+XwwDB+Px2QyAQzD4XBgGJKmKIpEIgEAiMfjkUgEGIEgCE3TGIb/CZT7CWRRk3oAAAAASUVORK5CYII=);
+            background-image: url("https://www.transparenttextures.com/patterns/stucco.png");
             content: "";
             height: 300%;
             left: -50%;
-            opacity: 0.04;
+            opacity: 0.15;
             position: fixed;
             top: -100%;
             width: 300%;
-            z-index: -1;
+            z-index: 9999;
             pointer-events: none;
+            mix-blend-mode: color-burn;
+        }
+
+        /* Vignette to frame the screen like an old camera/dossier file */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            box-shadow: inset 0 0 150px rgba(0,0,0,0.8);
+            pointer-events: none;
+            z-index: 9998;
         }
 
         h1, h2, h3, h4, h5, h6 {
@@ -57,10 +77,10 @@
             width: 10px;
         }
         ::-webkit-scrollbar-track {
-            background: #0f1115;
+            background: #1c1b18;
         }
         ::-webkit-scrollbar-thumb {
-            background: #333;
+            background: #3d3930;
             border-radius: 5px;
         }
         ::-webkit-scrollbar-thumb:hover {
@@ -176,13 +196,17 @@
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Yalta_summit_1945_with_Churchill%2C_Roosevelt%2C_Stalin.jpg/1200px-Yalta_summit_1945_with_Churchill%2C_Roosevelt%2C_Stalin.jpg');
         }
 
+        #holocaust-hero {
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Auschwitz_Birkenau_main_gate.jpg/1200px-Auschwitz_Birkenau_main_gate.jpg');
+        }
+
         .hero-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(ellipse at bottom, rgba(15,17,21,0.8) 0%, rgba(0,0,0,0.6) 70%), linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(15,17,21,1) 100%);
+            background: radial-gradient(ellipse at bottom, rgba(28,27,24,0.8) 0%, rgba(0,0,0,0.7) 70%), linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, var(--bg-color) 100%);
         }
 
         .hero-content {
@@ -195,35 +219,40 @@
             font-size: 4rem;
             color: #fff;
             margin-bottom: 1rem;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.5);
         }
 
         .hero p {
             font-size: 1.5rem;
-            color: #bbb;
+            color: #d1ccbf;
             margin-bottom: 2rem;
             font-weight: 300;
+            font-family: var(--font-typewriter);
         }
 
         .btn {
             display: inline-block;
-            padding: 12px 30px;
-            background: linear-gradient(45deg, var(--accent-color), #a32424);
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #7a2222, var(--accent-color));
             color: #fff;
             text-decoration: none;
             font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            border-radius: 4px;
-            transition: background 0.3s, transform 0.3s;
-            border: 1px solid var(--accent-color);
+            border-radius: 50px;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 1px solid #3d3930;
+            box-shadow: 0 5px 15px rgba(166, 48, 48, 0.3);
             cursor: pointer;
             position: relative;
             overflow: hidden;
         }
 
         .btn:hover {
-            background-color: transparent;
-            transform: translateY(-3px);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(166, 48, 48, 0.5);
+            border: 1px solid #a63030;
         }
 
         .btn::before {
@@ -310,6 +339,7 @@
             bottom: -10px;
             left: 0;
             transition: width 0.8s ease 0.5s;
+            box-shadow: 0 0 10px rgba(166,48,48,0.5);
         }
 
         .text-center h2::after {
@@ -346,23 +376,43 @@
         }
 
         .topic-card {
-            background: linear-gradient(145deg, #1f2229, #171a21);
-            border: 1px solid #2a2d35;
-            border-radius: 8px;
-            overflow: hidden;
+            background-color: var(--card-bg);
+            background-image: 
+                linear-gradient(rgba(39, 36, 30, 0.9), rgba(39, 36, 30, 0.98)),
+                url("https://www.transparenttextures.com/patterns/seamless-paper-texture.png");
+            border: 1px solid #3d3930;
+            border-radius: 4px;
             text-decoration: none;
             color: var(--text-color);
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            transition: box-shadow 0.4s ease;
             display: flex;
             flex-direction: column;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             position: relative;
             cursor: pointer;
+            transform-style: preserve-3d;
+        }
+
+        .topic-card::before {
+            content: 'TOP SECRET';
+            position: absolute;
+            top: 20px;
+            right: -25px;
+            transform: rotate(45deg);
+            color: rgba(166, 48, 48, 0.15);
+            font-family: var(--font-typewriter);
+            font-size: 2rem;
+            font-weight: bold;
+            pointer-events: none;
+            z-index: 10;
+            border: 3px solid rgba(166, 48, 48, 0.15);
+            padding: 5px 15px;
+            border-radius: 4px;
+            letter-spacing: 2px;
         }
 
         .topic-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 20px var(--accent-color);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 20px rgba(166, 48, 48, 0.4);
         }
 
         .topic-card.disabled {
@@ -371,7 +421,6 @@
         }
 
         .topic-card.disabled:hover {
-            transform: none;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
@@ -379,18 +428,30 @@
             height: 200px;
             background-size: cover;
             background-position: center;
-            transition: transform 0.5s ease;
+            transition: filter 0.6s ease;
+            filter: grayscale(80%) contrast(1.1);
+            border-bottom: 1px solid #3d3930;
+            border-radius: 4px 4px 0 0;
+            position: relative;
+        }
+        
+        .card-image::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(166, 48, 48, 0.1);
+            mix-blend-mode: overlay;
         }
 
         .topic-card:hover .card-image {
-            transform: scale(1.05);
+            filter: grayscale(0%) contrast(1.1);
         }
 
         .card-content {
             padding: 1.5rem;
             flex-grow: 1;
             z-index: 1;
-            background: var(--card-bg);
+            background: transparent;
         }
 
         .card-content h3 {
@@ -418,8 +479,8 @@
         .timeline::before {
             content: '';
             position: absolute;
-            width: 2px;
-            background: #333;
+            width: 0;
+            border-left: 2px dashed #4a4539;
             top: 0;
             left: 20px;
             height: 100%;
@@ -429,16 +490,19 @@
             position: absolute;
             width: 2px;
             background: var(--accent-color);
+            box-shadow: 0 0 10px var(--accent-color);
             top: 0;
             left: 20px;
             height: 0;
             transition: height 0.1s linear;
+            z-index: 2;
         }
 
         .timeline-item {
             position: relative;
             margin-bottom: 3rem;
             padding-left: 60px;
+            z-index: 3;
         }
 
         .timeline-dot {
@@ -459,17 +523,21 @@
         }
 
         .timeline-content {
-            background: linear-gradient(145deg, #1f2229, #171a21);
-            border: 1px solid #2a2d35;
+            background-color: var(--card-bg);
+            background-image: 
+                linear-gradient(rgba(39, 36, 30, 0.9), rgba(39, 36, 30, 0.98)),
+                url("https://www.transparenttextures.com/patterns/seamless-paper-texture.png");
+            border: 1px solid #3d3930;
             padding: 1.5rem;
-            border-radius: 8px;
+            border-radius: 4px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             position: relative;
-            transition: transform 0.3s ease;
+            transition: box-shadow 0.3s ease;
+            transform-style: preserve-3d;
         }
 
         .timeline-content:hover {
-            transform: translateX(10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5), 0 0 15px rgba(166,48,48,0.2);
         }
 
         .timeline-content::before {
@@ -479,21 +547,50 @@
             height: 0;
             border-top: 10px solid transparent;
             border-bottom: 10px solid transparent;
-            border-right: 10px solid #1f2229;
+            border-right: 10px solid #3d3930;
             left: -11px;
             top: 5px;
         }
 
+        .timeline-content::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-top: 9px solid transparent;
+            border-bottom: 9px solid transparent;
+            border-right: 9px solid var(--card-bg);
+            left: -9px;
+            top: 6px;
+        }
+
         .timeline-content h3 {
-            color: var(--accent-color);
-            font-size: 1.1rem;
+            color: #c2b280;
+            font-family: var(--font-typewriter);
+            font-size: 1.2rem;
             margin-bottom: 0.5rem;
+            letter-spacing: 1px;
         }
 
         .timeline-content h4 {
             color: #fff;
             font-size: 1.4rem;
             margin-bottom: 1rem;
+        }
+
+        .timeline-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            filter: grayscale(80%) sepia(30%);
+            border: 1px solid #3d3930;
+            transition: filter 0.4s ease;
+        }
+
+        .timeline-item:hover .timeline-image {
+            filter: grayscale(10%) sepia(10%);
         }
 
         .timeline-content p {
@@ -503,12 +600,12 @@
 
         /* Footer */
         footer {
-            background: #0a0b0e;
+            background: #151412;
             text-align: center;
             padding: 2rem;
-            color: #555;
+            color: #8c887e;
             font-size: 0.9rem;
-            border-top: 1px solid #222;
+            border-top: 1px solid #3d3930;
             animation: fadeInUp 1s ease forwards;
             opacity: 0;
             animation-delay: 0.5s;
@@ -517,36 +614,51 @@
         /* Animations */
         .hidden {
             opacity: 0;
-            transform: translateY(50px) scale(0.98);
-            filter: blur(3px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out, filter 0.8s ease-out;
+            transform: translateY(40px);
+            filter: blur(10px);
+            transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), 
+                        transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), 
+                        filter 1.2s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        .show {
+        .hidden.slide-left {
+            transform: translateX(-60px);
+        }
+
+        .hidden.slide-right {
+            transform: translateX(60px);
+        }
+
+        .hidden.scale-in {
+            transform: scale(0.9) translateY(20px);
+        }
+
+        .show,
+        .hidden.slide-left.show,
+        .hidden.slide-right.show,
+        .hidden.scale-in.show {
             opacity: 1;
-            transform: translateY(0) scale(1);
+            transform: translate(0) scale(1);
             filter: blur(0);
         }
 
         /* Leader Card Specific Animations */
-        .leader-card.hidden {
-            transform: translateY(0) scale(1);
-            filter: blur(0);
-            opacity: 1;
-        }
-
         .leader-card .leader-portrait,
         .leader-card .leader-info {
-            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s, opacity 0.8s ease-out 0.3s;
+            transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1) 0.2s, 
+                        transform 1.2s cubic-bezier(0.25, 1, 0.5, 1) 0.2s,
+                        filter 1.2s cubic-bezier(0.25, 1, 0.5, 1) 0.2s;
         }
 
-        .leader-card.hidden .leader-portrait {
-            transform: translateX(-100%);
+        .leader-card:not(.show) .leader-portrait {
             opacity: 0;
+            transform: scale(0.9);
+            filter: blur(10px);
         }
-        .leader-card.hidden .leader-info {
-            transform: translateX(100%);
+        .leader-card:not(.show) .leader-info {
             opacity: 0;
+            transform: translateX(40px);
+            filter: blur(10px);
         }
 
         .fade-in-up {
@@ -562,52 +674,84 @@
         .delay-1 { animation-delay: 0.3s; transition-delay: 0.3s; }
         .delay-2 { animation-delay: 0.6s; transition-delay: 0.6s; }
         .delay-3 { animation-delay: 0.9s; transition-delay: 0.9s; }
+        .delay-4 { animation-delay: 1.2s; transition-delay: 1.2s; }
+        .delay-5 { animation-delay: 1.5s; transition-delay: 1.5s; }
+        .delay-6 { animation-delay: 1.8s; transition-delay: 1.8s; }
 
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
         }
 
         @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-50px); }
-            to { opacity: 1; transform: translateX(0); }
+            from { opacity: 0; transform: translateX(-60px); filter: blur(10px); }
+            to { opacity: 1; transform: translateX(0); filter: blur(0); }
         }
 
-        /* Typing Effect Cursor */
+        /* Cinematic Reveal Effect */
         .typing-text {
-            border-right: 3px solid var(--accent-color);
-            white-space: nowrap;
-            overflow: hidden;
-            margin: 0 auto;
+            opacity: 0;
+            transform: scale(0.9) translateY(30px);
+            filter: blur(15px);
+            animation: cinematicReveal 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
             display: inline-block;
-            animation: typing 3s steps(40, end), blink-caret .75s step-end infinite;
         }
 
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
-        }
-
-        @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: var(--accent-color); }
+        @keyframes cinematicReveal {
+            to { 
+                opacity: 1; 
+                transform: scale(1) translateY(0); 
+                filter: blur(0);
+            }
         }
 
         /* Page Styles */
         .page {
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.6s ease-out, visibility 0.6s ease-out;
+            transform: scale(0.95) translateY(20px);
+            filter: blur(15px);
+            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), 
+                        transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), 
+                        filter 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+                        visibility 0.8s;
             position: absolute;
             width: 100%;
             top: 0;
             left: 0;
+            height: 0;
+            overflow: hidden;
+            pointer-events: none;
         }
 
         .page.active {
             opacity: 1;
             visibility: visible;
+            transform: scale(1) translateY(0);
+            filter: blur(0);
             position: relative;
+            height: auto;
+            overflow: visible;
+            pointer-events: auto;
+        }
+
+        .page.outgoing {
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(1.05) translateY(-20px);
+            filter: blur(15px);
+            transition: opacity 0.6s cubic-bezier(0.5, 0, 0.2, 1), 
+                        transform 0.6s cubic-bezier(0.5, 0, 0.2, 1), 
+                        filter 0.6s cubic-bezier(0.5, 0, 0.2, 1),
+                        visibility 0.6s;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            height: auto;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 50;
         }
 
         /* Leaders Section */
@@ -633,6 +777,7 @@
             background: var(--accent-color);
             bottom: -10px;
             left: 25%;
+            box-shadow: 0 0 10px rgba(166,48,48,0.5);
         }
 
         .leaders-section p {
@@ -650,69 +795,137 @@
             flex-direction: column;
             gap: 3rem;
             padding: 4rem 5%;
-            max-width: 900px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
         .leader-card {
-            background: linear-gradient(145deg, #1f2229, #171a21);
-            border: 1px solid #2a2d35;
-            border-radius: 12px;
-            overflow: hidden;
+            background-color: var(--card-bg);
+            background-image: 
+                linear-gradient(rgba(39, 36, 30, 0.9), rgba(39, 36, 30, 0.98)),
+                url("https://www.transparenttextures.com/patterns/seamless-paper-texture.png");
+            border: 1px solid #3d3930;
+            border-radius: 4px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            transition: box-shadow 0.4s ease;
             display: flex;
             flex-direction: row;
-            align-items: center;
+            align-items: stretch;
+            transform-style: preserve-3d;
+            position: relative;
             overflow: hidden;
+            min-height: 350px;
+        }
+
+        .leader-card::before {
+            content: 'CONFIDENTIAL';
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: rgba(166, 48, 48, 0.08);
+            font-family: var(--font-heading);
+            font-size: 4rem;
+            font-weight: bold;
+            pointer-events: none;
+            z-index: 0;
+            transform: rotate(-10deg);
         }
 
         .leader-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 20px var(--accent-color);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 20px rgba(166, 48, 48, 0.4);
         }
 
         .leader-portrait {
-            width: 300px;
-            height: 300px;
-            overflow: hidden;
+            width: 350px;
             position: relative;
             flex-shrink: 0;
+            border-right: 1px solid #3d3930;
         }
 
         .leader-portrait img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
-            border-radius: 8px;
+            transition: filter 0.6s ease;
+            border-radius: 4px 0 0 4px;
+            filter: grayscale(80%) contrast(1.1);
+            display: block;
+        }
+        
+        .leader-portrait::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(166, 48, 48, 0.1);
+            mix-blend-mode: overlay;
+            border-radius: 4px 0 0 4px;
+            pointer-events: none;
         }
 
         .leader-card:hover .leader-portrait img {
+            filter: grayscale(0%) contrast(1.1);
+        }
+
+        /* Vintage Radio Effect */
+        .leader-portrait.speaking img {
+            animation: radioPulse 2s infinite alternate;
+            filter: sepia(80%) contrast(1.2) brightness(0.9) !important;
             transform: scale(1.05);
+        }
+
+        .leader-portrait.speaking::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            box-shadow: inset 0 0 50px rgba(166, 48, 48, 0.5);
+            border-radius: 4px 0 0 4px;
+            pointer-events: none;
+            animation: borderPulse 2s infinite alternate;
+            background: rgba(166, 48, 48, 0.2);
+            mix-blend-mode: overlay;
+        }
+
+        @keyframes radioPulse {
+            0% { filter: sepia(80%) contrast(1.1) brightness(0.9); transform: scale(1); }
+            100% { filter: sepia(100%) contrast(1.3) brightness(0.8); transform: scale(1.02); }
+        }
+
+        @keyframes borderPulse {
+            0% { box-shadow: inset 0 0 20px rgba(166, 48, 48, 0.3); }
+            100% { box-shadow: inset 0 0 60px rgba(166, 48, 48, 0.7); }
         }
 
         .leader-info {
             padding: 2rem;
             flex-grow: 1;
+            z-index: 1;
         }
 
         .leader-info h3 {
-            color: #fff;
-            margin-bottom: 1rem;
-            font-size: 1.8rem;
+            color: #c2b280;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            font-family: var(--font-typewriter);
+            letter-spacing: 1px;
+            border-bottom: 2px dashed #3d3930;
+            padding-bottom: 0.5rem;
+            display: inline-block;
         }
 
         .leader-info p {
-            color: #aaa;
-            line-height: 1.6;
-            margin-bottom: 1rem;
+            color: #d8d3c5;
+            line-height: 1.3;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            text-align: start;
         }
 
         .leader-info audio {
             width: 100%;
             margin-top: 1rem;
         }
+
+        @media (max-width: 768px) {
             .nav-links {
                 position: fixed;
                 right: -100%;
@@ -744,10 +957,7 @@
             .hero p { font-size: 1.1rem; }
             
             .typing-text {
-                white-space: normal;
-                border-right: none;
-                animation: fadeInUp 1s ease forwards;
-                width: 100%;
+                animation: cinematicReveal 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
             }
 
             .timeline::before { left: 15px; }
@@ -763,6 +973,7 @@
             <li><a href="#" onclick="showPage('home')" class="active">Home</a></li>
             <li><a href="#" onclick="showPage('america')">America Enters</a></li>
             <li><a href="#" onclick="showPage('leaders')">World Leaders</a></li>
+            <li><a href="#" onclick="showPage('holocaust')">The Holocaust</a></li>
         </ul>
         <div class="hamburger">
             <div class="line"></div>
@@ -776,7 +987,7 @@
             <div class="hero-overlay"></div>
             <div class="hero-content">
                 <h1 class="typing-text">The Deadliest<br>Conflict in Human History</h1>
-                <p class="fade-in-up delay-1">Yes, I coded all of this and it took forever.</p>
+                <p class="fade-in-up delay-1">Student: Nathaniel Naik | Date: April 9, 2026 | Class: AP World History</p>
                 <a href="#" onclick="showPage('america')" class="btn fade-in-up delay-2">Explore the Timeline</a>
             </div>
         </header>
@@ -784,11 +995,15 @@
         <main id="explore">
             <section class="intro content-section hidden">
                 <h2>A World Torn Apart</h2>
-                <p>World War II was one of the most deadly and influential wars in human history, involving over 100 million people from the world's most powerful nations. </p>
+                <p>World War II (1939–1945) was the deadliest and most widespread conflict in human history, involving the vast majority of the world's nations. It was fought primarily between two major military alliances: the Axis powers (led by Nazi Germany, Imperial Japan, and Fascist Italy) and the Allies (led by the United Kingdom, the Soviet Union, and the United States).</p>
+                <br>
+                <p>The war began on September 1, 1939, when Germany invaded Poland, prompting Britain and France to declare war. The conflict escalated into a truly global war following the Japanese attack on Pearl Harbor in December 1941, which brought the United States into the fight. The war was characterized by unprecedented industrial-scale warfare, massive bombing campaigns of civilian populations, and the horrors of the Holocaust, resulting in an estimated 70 to 85 million fatalities.</p>
+                <br>
+                <p>The conflict concluded with the unconditional surrender of Germany in May 1945 and the formal surrender of Japan in September 1945 following the dropping of atomic bombs on Hiroshima and Nagasaki. The aftermath radically shifted the global power dynamic, leading to the creation of the United Nations to foster international cooperation and the onset of the Cold War.</p>
             </section>
 
             <section class="topics-grid">
-                <div class="topic-card hidden delay-1" onclick="showPage('america')">
+                <div class="topic-card hidden scale-in delay-1" onclick="showPage('america')">
                     <div class="card-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Pearl_Harbor_bombing.jpg/800px-Pearl_Harbor_bombing.jpg');"></div>
                     <div class="card-content">
                         <h3>America Enters the War</h3>
@@ -796,7 +1011,7 @@
                     </div>
                 </div>
                 
-                <div class="topic-card disabled hidden delay-2">
+                <div class="topic-card disabled hidden scale-in delay-2">
                     <div class="card-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/D-Day_landing_at_Normandy.jpg/800px-D-Day_landing_at_Normandy.jpg');"></div>
                     <div class="card-content">
                         <h3>The European Theater</h3>
@@ -804,11 +1019,19 @@
                     </div>
                 </div>
 
-                <div class="topic-card disabled hidden delay-3">
+                <div class="topic-card disabled hidden scale-in delay-3">
                     <div class="card-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Atomic_bomb_1945_mission_patch.jpg/800px-Atomic_bomb_1945_mission_patch.jpg');"></div>
                     <div class="card-content">
                         <h3>The Pacific Theater</h3>
                         <p>Coming Soon. Journey through the island-hopping campaigns and the war's dramatic end.</p>
+                    </div>
+                </div>
+
+                <div class="topic-card hidden scale-in delay-4" onclick="showPage('holocaust')">
+                    <div class="card-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Auschwitz_Birkenau_main_gate.jpg/800px-Auschwitz_Birkenau_main_gate.jpg');"></div>
+                    <div class="card-content">
+                        <h3>The Holocaust</h3>
+                        <p>Learn about the systematic state-sponsored genocide of six million Jews and millions of others.</p>
                     </div>
                 </div>
             </section>
@@ -836,39 +1059,73 @@
 
             <div class="timeline">
                 <div class="timeline-progress"></div>
-                <div class="timeline-item hidden">
+                <div class="timeline-item hidden slide-left">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Sep 1, 1939</h3>
+                        <h4>The War Begins</h4>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Wehrmacht_soldiers_in_Poland%2C_September_1939.jpg/800px-Wehrmacht_soldiers_in_Poland%2C_September_1939.jpg" alt="German forces invade Poland" class="timeline-image">
+                        <p>Germany invades Poland, officially starting World War II. The United States immediately declares neutrality, favoring an isolationist policy to stay out of another European conflict.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item hidden slide-right">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Sep 2, 1940</h3>
+                        <h4>Destroyers for Bases</h4>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/USS_Aaron_Ward_%28DD-132%29_1940.jpg/800px-USS_Aaron_Ward_%28DD-132%29_1940.jpg" alt="US Destroyers" class="timeline-image">
+                        <p>As Britain faces intense bombing during the Blitz, President Roosevelt bypasses Congress to trade 50 aging U.S. Navy destroyers for land rights on British possessions, inching the U.S. closer to the war effort.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item hidden slide-left">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Mar 11, 1941</h3>
+                        <h4>The Lend-Lease Act</h4>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Lend-lease-shipment.jpg/800px-Lend-lease-shipment.jpg" alt="Lend-Lease Supplies" class="timeline-image">
+                        <p>Congress passes the Lend-Lease Act, effectively ending the pretense of strict neutrality. It allowed the U.S. to supply military aid to foreign nations whose defense was deemed vital to the United States.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item hidden slide-right">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Jul 26, 1941</h3>
+                        <h4>The Japanese Oil Embargo</h4>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/FDR_1941.jpg/800px-FDR_1941.jpg" alt="Roosevelt Signs Order" class="timeline-image">
+                        <p>In response to Japanese expansion in French Indochina, the United States freezes all Japanese assets and establishes an embargo on oil and gasoline exports, creating a desperate energy crisis for Imperial Japan.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item hidden slide-left">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
                         <h3>Dec 7, 1941</h3>
                         <h4>Pearl Harbor</h4>
-                        <p>In a surprise military strike, the Japanese Air Service attacked the U.S base at Pearl Harbor in Honolulu, Hawaii. The attack killed 2,403 U.S. staff and damaged 19 Navy ships.</p>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Pearl_Harbor_bombing.jpg/800px-Pearl_Harbor_bombing.jpg" alt="Pearl Harbor Attack" class="timeline-image">
+                        <p>In a devastating surprise military strike, the Japanese Air Service attacked the U.S. naval base at Pearl Harbor in Hawaii. The attack killed 2,403 Americans and crippled the U.S. Pacific Fleet.</p>
                     </div>
                 </div>
-                
-                <div class="timeline-item hidden">
+
+                <div class="timeline-item hidden slide-right">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
                         <h3>Dec 8, 1941</h3>
-                        <h4>The U.S Declares War</h4>
-                        <p>Franklin D. Roosevelt addressed Congress, calling December 7 "a date which will live in infamy." Congress officially declared war on Japan, bringing the U.S. into World War 2.</p>
+                        <h4>The U.S. Declares War</h4>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/FDR_signs_declaration_of_war_against_Japan.jpg/800px-FDR_signs_declaration_of_war_against_Japan.jpg" alt="FDR signs declaration of war" class="timeline-image">
+                        <p>President Franklin D. Roosevelt addressed Congress, famously calling December 7 "a date which will live in infamy." Congress immediately declared war on Japan, bringing the United States into World War II.</p>
                     </div>
                 </div>
 
-                <div class="timeline-item hidden">
+                <div class="timeline-item hidden slide-left">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
                         <h3>Dec 11, 1941</h3>
-                        <h4>The Conflict Expands</h4>
-                        <p>Due to their Tripartite Pact with Japan, Germany and Italy declared war on the United States. The U.S. responded by fully engaging in the war across both the European and Pacific.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item hidden">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <h3>1942 and Beyond</h3>
-                        <h4>The War Economy</h4>
-                        <p>The U.S. economy transformed. Factories shifted from producing regular goods to building tanks, planes, and ships. Millions of Americans, including women, entered the workforce to support the war effort.</p>
+                        <h4>A Global Conflict</h4>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Hitler_declaration_of_war_against_USA.jpg/800px-Hitler_declaration_of_war_against_USA.jpg" alt="Hitler declares war on the USA" class="timeline-image">
+                        <p>Following their Tripartite Pact with Japan, Germany and Italy formally declared war on the United States. The U.S. responded with declarations of war against both nations, fully entering the European and Pacific theaters.</p>
                     </div>
                 </div>
             </div>
@@ -900,11 +1157,10 @@
                     </div>
                     <div class="leader-info">
                         <h3>Franklin D. Roosevelt</h3>
-                        <p><strong>Government:</strong> Democratic President of the United States (1933-1945)</p>
-                        <p><strong>Rise to Power:</strong> Elected in 1932 during the Great Depression, implemented the New Deal to combat economic crisis. Won unprecedented four terms as President.</p>
-                        <p><strong>Role in WWII:</strong> Initially maintained US neutrality but provided aid to Allies through Lend-Lease. After Pearl Harbor attack, declared war on Japan, then Germany and Italy. Led the US through the war, forming alliances with Churchill and Stalin.</p>
-                        <audio controls>
-                            <source src="https://www.nps.gov/media/multimedia/valr/FDR_Infamy_Speech.mp3" type="audio/mpeg">
+                        <p>Franklin D. Roosevelt emerged as a beacon of hope during the Great Depression, projecting immense confidence and utilizing innovative 'fireside chats' to communicate directly with the American people. His pragmatic, reassuring leadership style allowed him to push through sweeping New Deal reforms and win an unprecedented four terms as President.</p>
+                        <p>As war loomed, Roosevelt proved to be a masterful political tactician. He gradually prepared an isolationist nation for global conflict through initiatives like the Lend-Lease program, serving as the "Arsenal of Democracy" before officially entering the war. His ability to build and maintain the 'Grand Alliance' with vastly different figures like Churchill and Stalin was crucial to securing an Allied victory.</p>
+                        <audio controls aria-label="Audio recording of Franklin D. Roosevelt's speech" title="Play audio of Franklin D. Roosevelt">
+                            <source src="https://s3.amazonaws.com/RE-Warehouse/f/franklin_d_roosevelt_1940-12-29_great_arsenal_of_democracy_speech.mp3" type="audio/mpeg">
                             Your browser does not support the audio element.
                         </audio>
                     </div>
@@ -916,11 +1172,10 @@
                     </div>
                     <div class="leader-info">
                         <h3>Winston Churchill</h3>
-                        <p><strong>Government:</strong> Conservative Prime Minister of the United Kingdom (1940-1945, 1951-1955)</p>
-                        <p><strong>Rise to Power:</strong> Served in various government positions, became PM after Neville Chamberlain's resignation in 1940 due to failure of appeasement policy.</p>
-                        <p><strong>Role in WWII:</strong> Famous for his "We shall fight on the beaches" speech. Led Britain through the Blitz and D-Day invasion. Key figure in Allied strategy, working closely with Roosevelt and Stalin.</p>
-                        <audio controls>
-                            <source src="https://upload.wikimedia.org/wikipedia/commons/4/41/Winston_Churchill_-_Beaches_Speech.ogg" type="audio/ogg">
+                        <p>Winston Churchill spent much of the 1930s in political isolation as a prescient voice warning against the rising threat of Nazi Germany—a stance that catapulted him to Prime Minister when the policy of appeasement failed in 1940. Known for his bulldog-like stubbornness and unparalleled mastery of the English language, his stirring speeches became a weapon in themselves.</p>
+                        <p>By promising nothing but "blood, toil, tears, and sweat," he stiffened British resolve during their darkest hours of the Blitz, ensuring the island nation stood firm when all of Western Europe had fallen. He led from the front with a hands-on, deeply involved military style, demanding constant action and famously refusing to entertain any thought of surrender.</p>
+                        <audio controls aria-label="Audio recording of Winston Churchill's speech" title="Play audio of Winston Churchill">
+                            <source src="https://s3.amazonaws.com/RE-Warehouse/w/winston_churchill_speeches_and_radio_broadcasts_1934-11-16_the_threat_of_nazi_germany.mp3" type="audio/ogg">
                             Your browser does not support the audio element.
                         </audio>
                     </div>
@@ -932,11 +1187,10 @@
                     </div>
                     <div class="leader-info">
                         <h3>Joseph Stalin</h3>
-                        <p><strong>Government:</strong> General Secretary of the Communist Party of the Soviet Union (1922-1953)</p>
-                        <p><strong>Rise to Power:</strong> Became General Secretary in 1922, outmaneuvered rivals like Trotsky through political purges and the Great Purge of 1936-1938.</p>
-                        <p><strong>Role in WWII:</strong> Signed non-aggression pact with Hitler in 1939, but invaded by Germany in 1941. Led the USSR's defense, turning the tide at Stalingrad. Key at Tehran and Yalta conferences, shaping post-war Europe.</p>
-                        <audio controls>
-                            <source src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Stalin_speaks_on_German_Invasion_22_June_1941.ogg" type="audio/ogg">
+                        <p>Joseph Stalin rose from a radical Bolshevik operative to the absolute dictator of the Soviet Union, systematically outmaneuvering and eliminating key rivals. His leadership was defined by extreme paranoia, an iron-fisted totalitarianism, and an obsession with rapid industrialization, solidifying a terrifying cult of personality at the cost of millions of lives.</p>
+                        <p>As a war leader during the Nazi invasion, Stalin rebounded from initial shock with ruthless, unyielding directives like Order No. 227 ("Not One Step Back"). He demanded total obedience and immense, unprecedented sacrifice from the Soviet people, ruling through sheer terror while maintaining a rigid grip on the military apparatus that would eventually turn the tide of the war.</p>
+                        <audio controls aria-label="Audio recording of Joseph Stalin's speech" title="Play audio of Joseph Stalin">
+                            <source src="https://s3.amazonaws.com/RE-Warehouse/_num/1945_radio_news_1945-04-27_cbs_-_edward_r_murrow_-_stalin_speech.mp3" type="audio/ogg">
                             Your browser does not support the audio element.
                         </audio>
                     </div>
@@ -948,11 +1202,10 @@
                     </div>
                     <div class="leader-info">
                         <h3>Adolf Hitler</h3>
-                        <p><strong>Government:</strong> Führer of Nazi Germany (1934-1945)</p>
-                        <p><strong>Rise to Power:</strong> Joined German Workers' Party in 1919, renamed it Nazi Party. Became Chancellor in 1933 through democratic election, then Reichstag Fire led to Enabling Act making him dictator.</p>
-                        <p><strong>Role in WWII:</strong> Initiated war by invading Poland in 1939. Implemented Holocaust, killing 6 million Jews. Committed suicide in 1945 as Berlin fell.</p>
-                        <audio controls>
-                            <source src="https://upload.wikimedia.org/wikipedia/commons/2/22/Hitler_declares_war_on_the_USA.ogg" type="audio/ogg">
+                        <p>Adolf Hitler capitalized on the economic devastation of the Weimar Republic, rising to power through mesmerizing, deeply theatrical speeches and the violent intimidation tactics of his paramilitary forces. His leadership style was driven by manic obsession and absolute fanaticism, cultivating a "Führer" cult of personality that demanded unquestioning loyalty over competence.</p>
+                        <p>His horrific ideology of Aryan racial supremacy served as the foundational law of the Third Reich, culminating in the systematic genocide of the Holocaust. Administratively, Hitler ruled through a chaotic system of overlapping, competing bureaucracies, ensuring that all final authority rested solely in his hands, which ultimately led to erratic military blunders as his delusions deepened.</p>
+                        <audio controls aria-label="Audio recording of Adolf Hitler's speech" title="Play audio of Adolf Hitler">
+                            <source src="https://s3.amazonaws.com/RE-Warehouse/v/voices_of_history_1934-01-30_hitler_reichstag_speech.mp3" type="audio/ogg">
                             Your browser does not support the audio element.
                         </audio>
                     </div>
@@ -964,15 +1217,72 @@
                     </div>
                     <div class="leader-info">
                         <h3>Benito Mussolini</h3>
-                        <p><strong>Government:</strong> Duce of Fascist Italy (1922-1943)</p>
-                        <p><strong>Rise to Power:</strong> Founded Fasci Italiani di Combattimento in 1919. Led March on Rome in 1922, appointed PM by King Victor Emmanuel III.</p>
-                        <p><strong>Role in WWII:</strong> Ally of Hitler, invaded Ethiopia and Albania. Entered WWII in 1940 but suffered defeats. Deposed in 1943, executed by partisans in 1945.</p>
-                        <audio controls>
+                        <p>Benito Mussolini capitalized on post-war Italian discontent, founding the Fascist movement and intimidating the government into handing over power through the theatrical "March on Rome" in 1922. He centralized absolute power around his own cult of personality, branding himself as "Il Duce" (The Leader).</p>
+                        <p>He ruled by projecting an image of fierce, hyper-masculine strength, promising a glorious return to the dominance of the ancient Roman Empire. His leadership heavily prioritized aggressive militarism, intense state propaganda, and grandiose posturing over pragmatic planning, ultimately leading Italy into disastrous, overextended military campaigns alongside Nazi Germany.</p>
+                        <audio controls aria-label="Audio recording of Benito Mussolini's speech" title="Play audio of Benito Mussolini">
                             <source src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Benito_Mussolini_-_Dichiarazione_di_guerra_%2810_giugno_1940%29.ogg" type="audio/ogg">
                             Your browser does not support the audio element.
                         </audio>
                     </div>
                 </div>
+
+                <div class="leader-card hidden delay-6">
+                    <div class="leader-portrait">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Hideki_Tojo.jpg/800px-Hideki_Tojo.jpg" alt="Hideki Tojo">
+                    </div>
+                    <div class="leader-info">
+                        <h3>Hideki Tojo</h3>
+                        <p>Hideki Tojo rose through the Imperial Japanese Army, earning the nickname "The Razor" for his sharp bureaucratic efficiency. A fierce nationalist, he became the face of Japanese expansionism, serving as Prime Minister and Minister of War simultaneously. Unlike European dictators, he was not an absolute sovereign, but a devoted bureaucratic loyalist who answered to Emperor Hirohito.</p>
+                        <p>His leadership style was deeply authoritarian and unyielding. As the primary architect of the preemptive strike on Pearl Harbor, Tojo enforced total national mobilization and severely restricted civilian liberties. He promoted a fanatic martial culture based on the Bushido code, demanding absolute loyalty and glorifying death before surrender across the Pacific Theater.</p>
+                        <audio controls aria-label="Audio recording of Hideki Tojo's speech" title="Play audio of Hideki Tojo">
+                            <source src="https://s3.amazonaws.com/RE-Warehouse/_num/1941_radio_news_1941-12-07_nhk_-_gen_hideki_tojo_declares_war_on_the_allies.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="holocaust-page" class="page">
+        <header class="hero" id="holocaust-hero">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1 class="slide-in-left">The Holocaust</h1>
+                <p class="fade-in-up delay-1">The Systematic Annihilation of Millions</p>
+            </div>
+            <div class="scroll-indicator">
+                <div class="mouse"></div>
+            </div>
+        </header>
+
+        <main>
+            <section class="content-section hidden">
+                <h2 class="section-title">The Roots of Hatred</h2>
+                <p>The Holocaust, or the Shoah, did not begin with gas chambers; it began with words, prejudice, and legally sanctioned discrimination. Following their rise to power in 1933, Adolf Hitler and the Nazi Party rapidly transformed Germany into a totalitarian state built upon the deeply flawed pseudoscientific ideology of Aryan racial supremacy. Antisemitism, which had existed in Europe for centuries, was weaponized and codified into state law. The passage of the Nuremberg Laws in 1935 stripped German Jews of their citizenship, prohibited them from marrying non-Jews, and systematically excluded them from public life, education, and many professions.</p>
+                <br>
+                <p>Through relentless propaganda orchestrated by Joseph Goebbels, the state dehumanized the Jewish population, portraying them as an existential threat to the German nation. This normalization of hatred culminated in the violent pogroms of Kristallnacht (The Night of Broken Glass) in 1938, where Jewish businesses, homes, and synagogues were burned, and tens of thousands of Jewish men were sent to concentration camps. It was a terrifying turning point that signaled the transition from discriminatory legislation to state-sponsored physical violence.</p>
+            </section>
+
+            <section class="content-section hidden">
+                <h2 class="section-title">Ghettos and the Escalation of Terror</h2>
+                <p>As Nazi Germany invaded Poland in 1939 and subsequently conquered much of Europe, millions of Jewish civilians fell under German control. To isolate and control these populations, Nazi authorities forced Jews out of their homes and crowded them into designated, tightly sealed urban districts known as ghettos. The conditions within these ghettos—such as those in Warsaw and Łódź—were deliberately designed to be lethal. Overcrowding, rampant disease, deliberate starvation, and lack of basic sanitation claimed hundreds of thousands of lives before the mass deportations even began.</p>
+                <br>
+                <p>Behind the front lines of the advancing German army in the Soviet Union, the violence escalated drastically. Mobile killing squads known as the Einsatzgruppen, heavily assisted by local collaborators, followed the regular military and carried out mass shootings. Entire Jewish communities were rounded up, forced to dig their own graves in ravines and forests, and executed en masse. It is estimated that nearly two million Jews were murdered in these "Holocaust by bullets" operations.</p>
+            </section>
+
+            <section class="content-section hidden">
+                <h2 class="section-title">The "Final Solution"</h2>
+                <p>In January 1942, high-ranking Nazi officials convened at the Wannsee Conference to coordinate the logistical execution of what they euphemistically called the "Final Solution to the Jewish Question." The focus shifted from mass shootings, which were deemed inefficient and psychologically taxing for the perpetrators, to an industrialized system of mass murder. Six major extermination camps were constructed in occupied Poland, including Auschwitz-Birkenau, Treblinka, Sobibor, and Belzec.</p>
+                <br>
+                <p>Victims from across Europe were packed into cattle cars without food, water, or ventilation for journeys that could last for days. Upon arrival, families were immediately separated during the "selection" process. Those deemed fit for slave labor faced brutal conditions, starvation, and arbitrary execution. The vast majority—including children, the elderly, and the pregnant—were sent directly to gas chambers disguised as shower rooms. This mechanized, factory-like approach to genocide was unprecedented in human history.</p>
+            </section>
+
+            <section class="content-section hidden">
+                <h2 class="section-title">Legacy and Remembrance</h2>
+                <p>By the time Allied forces penetrated Germany and Poland, discovering the horrifying reality of the camps, the scale of the devastation was almost incomprehensible. Six million Jewish men, women, and children had been murdered—representing two-thirds of Europe's Jewish population. The Nazi regime also targeted and systematically murdered millions of others they deemed "undesirable," including Romani people, people with disabilities, Soviet prisoners of war, Polish civilians, homosexuals, and political dissidents.</p>
+                <br>
+                <p>The liberation of the camps revealed mountains of corpses, starving survivors barely clinging to life, and the undeniable physical evidence of an industrialized genocide. The subsequent Nuremberg Trials established the concept of "crimes against humanity," holding high-ranking Nazi officials accountable for their atrocities. Today, the Holocaust stands as a profound, agonizing reminder of the absolute extremes of human cruelty, underscoring the critical necessity of defending human rights and combating hatred in all its forms.</p>
             </section>
         </main>
     </div>
@@ -985,29 +1295,51 @@
         document.addEventListener("DOMContentLoaded", () => {
             // Page switching function
             window.showPage = function(page) {
-                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-                document.getElementById(page + '-page').classList.add('active');
+                const activePage = document.querySelector('.page.active');
+                const targetPage = document.getElementById(page + '-page');
+                
+                if (activePage && activePage !== targetPage) {
+                    activePage.classList.remove('active');
+                    activePage.classList.add('outgoing');
+                    
+                    setTimeout(() => {
+                        activePage.classList.remove('outgoing');
+                        activateTargetPage(targetPage, page);
+                    }, 600);
+                } else if (!activePage) {
+                    activateTargetPage(targetPage, page);
+                }
                 
                 // Update nav active
                 document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-                if (page === 'home') {
-                    document.querySelector('a[onclick*="home"]').classList.add('active');
-                } else if (page === 'america') {
-                    document.querySelector('a[onclick*="america"]').classList.add('active');
-                } else if (page === 'leaders') {
-                    document.querySelector('a[onclick*="leaders"]').classList.add('active');
-                }
-                
-                // Scroll to top
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                const navLink = document.querySelector(`a[onclick*="${page}"]`);
+                if (navLink) navLink.classList.add('active');
+            };
+
+            function activateTargetPage(targetPage, pageName) {
+                targetPage.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'instant' });
                 
                 // Re-observe hidden elements for animations
-                const hiddenElements = document.querySelectorAll('.hidden');
+                const hiddenElements = targetPage.querySelectorAll('.hidden');
                 hiddenElements.forEach(el => {
                     el.classList.remove('show');
                     observer.observe(el);
                 });
-            };
+
+                // Reset keyframe animations
+                const animatedElements = targetPage.querySelectorAll('.fade-in-up, .slide-in-left, .typing-text');
+                animatedElements.forEach(el => {
+                    el.style.animation = 'none';
+                    void el.offsetWidth; // trigger reflow
+                    el.style.animation = null;
+                });
+                
+                // Trigger scroll to update timeline & parallax immediately
+                setTimeout(() => {
+                    window.dispatchEvent(new Event('scroll'));
+                }, 50);
+            }
 
             // Navbar Scroll Effect
             const navbar = document.querySelector('.navbar');
@@ -1029,31 +1361,30 @@
                 }
                 
                 // Parallax effect for hero background
-                const hero = document.querySelector('.hero');
-                if (hero) {
+                const activeHero = document.querySelector('.page.active .hero');
+                if (activeHero) {
                     const scrolled = window.pageYOffset;
                     const rate = scrolled * -0.3;
-                    hero.style.backgroundPositionY = rate + 'px';
+                    activeHero.style.backgroundPositionY = rate + 'px';
                 }
 
                 // Animated timeline
-                const timeline = document.querySelector('.timeline');
+                const timeline = document.querySelector('.page.active .timeline');
                 if (timeline) {
                     const timelineProgress = timeline.querySelector('.timeline-progress');
                     const timelineRect = timeline.getBoundingClientRect();
                     const windowHeight = window.innerHeight;
-                    const timelineItems = timeline.querySelectorAll('.timeline-item');
-                    if (timelineItems.length > 0) {
-                        const lastItem = timelineItems[timelineItems.length - 1];
-                        const lastItemRect = lastItem.getBoundingClientRect();
-                        
-                        if (timelineRect.top < windowHeight && lastItemRect.bottom > 0) {
-                            let totalHeight = lastItem.offsetTop + lastItem.clientHeight;
-                            let scrollPercent = ((windowHeight - timelineRect.top) / (windowHeight + timelineRect.height)) * 110; // Use 110 to ensure it completes
-                            scrollPercent = Math.min(100, Math.max(0, scrollPercent));
-                            
-                            timelineProgress.style.height = scrollPercent + '%';
-                        }
+                    
+                    // Start line growth when timeline top reaches middle of screen
+                    const startPos = windowHeight / 2;
+                    
+                    if (timelineRect.top < startPos) {
+                        let heightPixels = startPos - timelineRect.top;
+                        // Limit height to the full timeline height
+                        heightPixels = Math.min(timelineRect.height, Math.max(0, heightPixels));
+                        timelineProgress.style.height = heightPixels + 'px';
+                    } else {
+                        timelineProgress.style.height = '0px';
                     }
                 }
             });
@@ -1088,13 +1419,6 @@
             const hiddenElements = document.querySelectorAll('.hidden');
             hiddenElements.forEach(el => observer.observe(el));
 
-            // Typing effect for long texts on mobile fallback
-            const typingElement = document.querySelector('.typing-text');
-            if (typingElement && window.innerWidth <= 768) {
-                typingElement.style.whiteSpace = 'normal';
-                typingElement.style.borderRight = 'none';
-            }
-
             // Smooth scroll for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
@@ -1112,6 +1436,93 @@
                     if(navLinks.classList.contains('active')) {
                         navLinks.classList.remove('active');
                         hamburger.classList.remove('active');
+                    }
+                });
+            });
+
+            // 3D Tilt Effect
+            const tiltElements = document.querySelectorAll('.topic-card:not(.disabled), .timeline-content, .leader-card');
+            
+            tiltElements.forEach(el => {
+                const innerContent = el.querySelectorAll('.card-image, .card-content, .leader-portrait, .leader-info');
+                let frameId;
+                
+                el.addEventListener('mousemove', (e) => {
+                    cancelAnimationFrame(frameId);
+                    frameId = requestAnimationFrame(() => {
+                        const rect = el.getBoundingClientRect();
+                        const x = e.clientX - rect.left; 
+                        const y = e.clientY - rect.top;  
+                        
+                        const centerX = rect.width / 2;
+                        const centerY = rect.height / 2;
+                        
+                        // Much smoother, softer tilt
+                        const rotateX = ((y - centerY) / centerY) * -3; 
+                        const rotateY = ((x - centerX) / centerX) * 3;  
+                        
+                        el.style.transform = `perspective(1000px) scale(1.02) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                        el.style.transition = 'transform 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94)'; 
+                        
+                        // Parallax inner items gently
+                        innerContent.forEach(inner => {
+                            inner.style.transform = `translateZ(15px)`;
+                            inner.style.transition = 'transform 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                        });
+                    });
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    cancelAnimationFrame(frameId);
+                    el.style.transform = '';
+                    el.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s ease';
+                    
+                    innerContent.forEach(inner => {
+                        inner.style.transform = '';
+                        inner.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
+                    });
+                });
+                
+                el.addEventListener('mouseenter', () => {
+                    el.style.transition = 'transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.2s ease';
+                    innerContent.forEach(inner => {
+                        inner.style.transition = 'transform 0.2s cubic-bezier(0.25, 1, 0.5, 1)';
+                    });
+                });
+            });
+
+            // Vintage Audio Effect
+            const audios = document.querySelectorAll('audio');
+            audios.forEach(audio => {
+                audio.addEventListener('play', (e) => {
+                    // Pause other audios
+                    audios.forEach(a => {
+                        if (a !== e.target) {
+                            a.pause();
+                        }
+                    });
+                    
+                    // Add speaking class
+                    const card = e.target.closest('.leader-card');
+                    if (card) {
+                        const portrait = card.querySelector('.leader-portrait');
+                        portrait.classList.add('speaking');
+                    }
+                });
+
+                audio.addEventListener('pause', (e) => {
+                    const card = e.target.closest('.leader-card');
+                    if (card) {
+                        const portrait = card.querySelector('.leader-portrait');
+                        portrait.classList.remove('speaking');
+                    }
+                });
+                
+                audio.addEventListener('ended', (e) => {
+                    const card = e.target.closest('.leader-card');
+                    if (card) {
+                        const portrait = card.querySelector('.leader-portrait');
+                        portrait.classList.remove('speaking');
                     }
                 });
             });
