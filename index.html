@@ -311,6 +311,205 @@
             100% { transform: scale(1); }
         }
 
+        /* Accessibility Focus States */
+        :focus-visible {
+            outline: 2px dashed var(--accent-color);
+            outline-offset: 4px;
+            border-radius: 2px;
+        }
+
+        /* Narrative Scrolling Effect */
+        .narrative-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-bottom: 5rem;
+        }
+
+        .narrative-section {
+            min-height: 150vh;
+            display: block;
+            position: relative;
+            background-color: var(--card-bg);
+            border: 1px solid #3d3930;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background-blend-mode: multiply;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .narrative-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to bottom, rgba(28,27,24,0.9), rgba(10,9,8,0.7));
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .narrative-section.parallax-1 {
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Wehrmacht_soldiers_in_Poland%2C_September_1939.jpg/1200px-Wehrmacht_soldiers_in_Poland%2C_September_1939.jpg');
+        }
+
+        .narrative-section.parallax-2 {
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/St_Paul%27s_survives.jpg/1200px-St_Paul%27s_survives.jpg');
+        }
+        
+        .narrative-section.parallax-3 {
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Yalta_summit_1945_with_Churchill%2C_Roosevelt%2C_Stalin.jpg/1200px-Yalta_summit_1945_with_Churchill%2C_Roosevelt%2C_Stalin.jpg');
+        }
+
+        .narrative-content {
+            position: sticky;
+            top: 50vh;
+            transform: translateY(calc(-50% + var(--scroll-y, 20px))) scale(var(--scroll-s, 0.9));
+            opacity: var(--scroll-o, 0);
+            margin: 0 auto;
+            z-index: 1;
+            max-width: 900px;
+            text-align: center;
+            background: rgba(28, 26, 23, 0.6);
+            padding: 3rem;
+            border-radius: 4px;
+            border: 1px solid rgba(139, 37, 37, 0.2);
+            backdrop-filter: blur(5px);
+            will-change: transform, opacity;
+        }
+        
+        .narrative-content:hover {
+            transform: translateY(calc(-50% + var(--scroll-y, 0px))) scale(calc(var(--scroll-s, 1) + 0.02));
+            transition: transform 0.3s ease;
+        }
+
+        .narrative-content h2 {
+            font-size: 3rem;
+            color: #fff;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.9);
+        }
+
+        .narrative-content h2::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background: var(--accent-color);
+            bottom: -10px;
+            left: 25%;
+            box-shadow: 0 0 10px rgba(166,48,48,0.5);
+        }
+
+        .narrative-content p {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            color: #e5e0d8;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.9);
+            font-weight: bold;
+        }
+        
+        /* Media Text Split Layout */
+        .media-text-split {
+            display: flow-root;
+            margin-top: 2rem;
+        }
+
+        .media-text-split .media-content {
+            float: right;
+            width: 45%;
+            min-width: 300px;
+            margin: 0.5rem 0 1.5rem 2.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .media-text-split.reverse .media-content {
+            float: left;
+            margin: 0.5rem 2.5rem 1.5rem 0;
+        }
+
+        .vintage-media {
+            width: 100%;
+            border-radius: 4px;
+            filter: grayscale(80%) sepia(30%) contrast(1.1);
+            border: 1px solid #3d3930;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            transition: filter 0.4s ease;
+        }
+
+        .vintage-media:hover {
+            filter: grayscale(10%) sepia(10%) contrast(1.1);
+        }
+
+        .audio-container {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 4px;
+            border: 1px solid #3d3930;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .audio-container::before {
+            content: 'AUDIO LOG';
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            color: rgba(166, 48, 48, 0.2);
+            font-family: var(--font-typewriter);
+            font-size: 1.5rem;
+            font-weight: bold;
+            pointer-events: none;
+            z-index: 0;
+            transform: rotate(5deg);
+        }
+
+        .audio-container label {
+            color: #c2b280;
+            font-family: var(--font-typewriter);
+            font-size: 1rem;
+            letter-spacing: 1px;
+            z-index: 1;
+            border-bottom: 1px dashed #3d3930;
+            padding-bottom: 5px;
+        }
+
+        .audio-container audio {
+            width: 100%;
+            outline: none;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .media-text-split .media-content, .media-text-split.reverse .media-content {
+                float: none;
+                width: 100%;
+                min-width: unset;
+                margin: 0 0 2rem 0;
+            }
+            .narrative-content {
+                padding: 1.5rem;
+            }
+            .narrative-content h2 {
+                font-size: 2rem;
+            }
+            .narrative-content p {
+                font-size: 1.1rem;
+            }
+            .narrative-section {
+                padding: 1rem;
+                min-height: 50vh;
+            }
+            .narrative-container {
+                gap: 5vh;
+            }
+        }
+
         /* Main Content */
         main {
             padding: 4rem 5%;
@@ -970,12 +1169,12 @@
     <nav class="navbar">
         <div class="logo">WW2 History</div>
         <ul class="nav-links">
-            <li><a href="#" onclick="showPage('home')" class="active">Home</a></li>
-            <li><a href="#" onclick="showPage('america')">America Enters</a></li>
-            <li><a href="#" onclick="showPage('leaders')">World Leaders</a></li>
-            <li><a href="#" onclick="showPage('holocaust')">The Holocaust</a></li>
+            <li><a href="#" onclick="showPage('home')" class="active" aria-label="Go to Home page">Home</a></li>
+            <li><a href="#" onclick="showPage('america')" aria-label="Go to America Enters page">America Enters</a></li>
+            <li><a href="#" onclick="showPage('leaders')" aria-label="Go to World Leaders page">World Leaders</a></li>
+            <li><a href="#" onclick="showPage('holocaust')" aria-label="Go to The Holocaust page">The Holocaust</a></li>
         </ul>
-        <div class="hamburger">
+        <div class="hamburger" role="button" aria-label="Toggle navigation menu" tabindex="0">
             <div class="line"></div>
             <div class="line"></div>
             <div class="line"></div>
@@ -988,22 +1187,34 @@
             <div class="hero-content">
                 <h1 class="typing-text">The Deadliest<br>Conflict in Human History</h1>
                 <p class="fade-in-up delay-1">Student: Nathaniel Naik | Date: April 9, 2026 | Class: AP World History</p>
-                <a href="#" onclick="showPage('america')" class="btn fade-in-up delay-2">Explore the Timeline</a>
+                <a href="#" onclick="showPage('america')" class="btn fade-in-up delay-2" aria-label="Explore the Timeline">Explore the Timeline</a>
             </div>
         </header>
 
         <main id="explore">
-            <section class="intro content-section hidden">
-                <h2>A World Torn Apart</h2>
-                <p>World War II (1939–1945) was the deadliest and most widespread conflict in human history, involving the vast majority of the world's nations. It was fought primarily between two major military alliances: the Axis powers (led by Nazi Germany, Imperial Japan, and Fascist Italy) and the Allies (led by the United Kingdom, the Soviet Union, and the United States).</p>
-                <br>
-                <p>The war began on September 1, 1939, when Germany invaded Poland, prompting Britain and France to declare war. The conflict escalated into a truly global war following the Japanese attack on Pearl Harbor in December 1941, which brought the United States into the fight. The war was characterized by unprecedented industrial-scale warfare, massive bombing campaigns of civilian populations, and the horrors of the Holocaust, resulting in an estimated 70 to 85 million fatalities.</p>
-                <br>
-                <p>The conflict concluded with the unconditional surrender of Germany in May 1945 and the formal surrender of Japan in September 1945 following the dropping of atomic bombs on Hiroshima and Nagasaki. The aftermath radically shifted the global power dynamic, leading to the creation of the United Nations to foster international cooperation and the onset of the Cold War.</p>
+            <section class="narrative-container">
+                <div class="narrative-section parallax-1">
+                    <div class="narrative-content">
+                        <h2>A World Torn Apart</h2>
+                        <p>World War II (1939–1945) was the deadliest and most widespread conflict in human history, involving the vast majority of the world's nations. It was fought primarily between two major military alliances: the Axis powers (led by Nazi Germany, Imperial Japan, and Fascist Italy) and the Allies (led by the United Kingdom, the Soviet Union, and the United States).</p>
+                    </div>
+                </div>
+                
+                <div class="narrative-section parallax-2">
+                    <div class="narrative-content">
+                        <p>The war began on September 1, 1939, when Germany invaded Poland, prompting Britain and France to declare war. The conflict escalated into a truly global war following the Japanese attack on Pearl Harbor in December 1941, which brought the United States into the fight. The war was characterized by unprecedented industrial-scale warfare, massive bombing campaigns of civilian populations, and the horrors of the Holocaust, resulting in an estimated 70 to 85 million fatalities.</p>
+                    </div>
+                </div>
+                
+                <div class="narrative-section parallax-3">
+                    <div class="narrative-content">
+                        <p>The conflict concluded with the unconditional surrender of Germany in May 1945 and the formal surrender of Japan in September 1945 following the dropping of atomic bombs on Hiroshima and Nagasaki. The aftermath radically shifted the global power dynamic, leading to the creation of the United Nations to foster international cooperation and the onset of the Cold War.</p>
+                    </div>
+                </div>
             </section>
 
             <section class="topics-grid">
-                <div class="topic-card hidden scale-in delay-1" onclick="showPage('america')">
+                <div class="topic-card hidden scale-in delay-1" onclick="showPage('america')" role="button" tabindex="0" aria-label="Go to America Enters page">
                     <div class="card-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Pearl_Harbor_bombing.jpg/800px-Pearl_Harbor_bombing.jpg');"></div>
                     <div class="card-content">
                         <h3>America Enters the War</h3>
@@ -1027,7 +1238,7 @@
                     </div>
                 </div>
 
-                <div class="topic-card hidden scale-in delay-4" onclick="showPage('holocaust')">
+                <div class="topic-card hidden scale-in delay-4" onclick="showPage('holocaust')" role="button" tabindex="0" aria-label="Go to The Holocaust page">
                     <div class="card-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Auschwitz_Birkenau_main_gate.jpg/800px-Auschwitz_Birkenau_main_gate.jpg');"></div>
                     <div class="card-content">
                         <h3>The Holocaust</h3>
@@ -1259,30 +1470,72 @@
         <main>
             <section class="content-section hidden">
                 <h2 class="section-title">The Roots of Hatred</h2>
-                <p>The Holocaust, or the Shoah, did not begin with gas chambers; it began with words, prejudice, and legally sanctioned discrimination. Following their rise to power in 1933, Adolf Hitler and the Nazi Party rapidly transformed Germany into a totalitarian state built upon the deeply flawed pseudoscientific ideology of Aryan racial supremacy. Antisemitism, which had existed in Europe for centuries, was weaponized and codified into state law. The passage of the Nuremberg Laws in 1935 stripped German Jews of their citizenship, prohibited them from marrying non-Jews, and systematically excluded them from public life, education, and many professions.</p>
-                <br>
-                <p>Through relentless propaganda orchestrated by Joseph Goebbels, the state dehumanized the Jewish population, portraying them as an existential threat to the German nation. This normalization of hatred culminated in the violent pogroms of Kristallnacht (The Night of Broken Glass) in 1938, where Jewish businesses, homes, and synagogues were burned, and tens of thousands of Jewish men were sent to concentration camps. It was a terrifying turning point that signaled the transition from discriminatory legislation to state-sponsored physical violence.</p>
+                <div class="media-text-split">
+                    <div class="media-content">
+                        <img src="https://encyclopedia.ushmm.org/images/large/d15c66f6-0876-4544-89a4-855495ea604d.jpeg" class="vintage-media" alt="Nazi SA members holding signs to boycott a Jewish business in Braunschweig, 1933.">
+                        <div class="audio-container">
+                            <label>German Propaganda Broadcast</label>
+                            <audio controls aria-label="Audio recording of a historical broadcast during the rise of the Nazi regime">
+                                <source src="https://s3.amazonaws.com/RE-Warehouse/w/winston_churchill_speeches_and_radio_broadcasts_1934-11-16_the_threat_of_nazi_germany.mp3" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                    <div class="text-content">
+                        <p>The Holocaust, or the Shoah, did not begin with gas chambers; it began with words, prejudice, and legally sanctioned discrimination. Following their rise to power in 1933, Adolf Hitler and the Nazi Party rapidly transformed Germany into a totalitarian state built upon the deeply flawed pseudoscientific ideology of Aryan racial supremacy. Antisemitism, which had existed in Europe for centuries, was weaponized and codified into state law. The passage of the Nuremberg Laws in 1935 stripped German Jews of their citizenship, prohibited them from marrying non-Jews, and systematically excluded them from public life, education, and many professions.</p>
+                        <br>
+                        <p>Through relentless propaganda orchestrated by Joseph Goebbels, the state dehumanized the Jewish population, portraying them as an existential threat to the German nation. This normalization of hatred culminated in the violent pogroms of Kristallnacht (The Night of Broken Glass) in 1938, where Jewish businesses, homes, and synagogues were burned, and tens of thousands of Jewish men were sent to concentration camps. It was a terrifying turning point that signaled the transition from discriminatory legislation to state-sponsored physical violence.</p>
+                    </div>
+                </div>
             </section>
 
             <section class="content-section hidden">
                 <h2 class="section-title">Ghettos and the Escalation of Terror</h2>
-                <p>As Nazi Germany invaded Poland in 1939 and subsequently conquered much of Europe, millions of Jewish civilians fell under German control. To isolate and control these populations, Nazi authorities forced Jews out of their homes and crowded them into designated, tightly sealed urban districts known as ghettos. The conditions within these ghettos—such as those in Warsaw and Łódź—were deliberately designed to be lethal. Overcrowding, rampant disease, deliberate starvation, and lack of basic sanitation claimed hundreds of thousands of lives before the mass deportations even began.</p>
-                <br>
-                <p>Behind the front lines of the advancing German army in the Soviet Union, the violence escalated drastically. Mobile killing squads known as the Einsatzgruppen, heavily assisted by local collaborators, followed the regular military and carried out mass shootings. Entire Jewish communities were rounded up, forced to dig their own graves in ravines and forests, and executed en masse. It is estimated that nearly two million Jews were murdered in these "Holocaust by bullets" operations.</p>
+                <div class="media-text-split reverse">
+                    <div class="media-content">
+                        <img src="https://encyclopedia.ushmm.org/images/large/5645dd58-35a6-4ed2-b309-1164e0d6d3da.jpeg" class="vintage-media" alt="German soldiers leading Jewish men, women, and children out of the Warsaw Ghetto, 1943.">
+                    </div>
+                    <div class="text-content">
+                        <p>As Nazi Germany invaded Poland in 1939 and subsequently conquered much of Europe, millions of Jewish civilians fell under German control. To isolate and control these populations, Nazi authorities forced Jews out of their homes and crowded them into designated, tightly sealed urban districts known as ghettos. The conditions within these ghettos—such as those in Warsaw and Łódź—were deliberately designed to be lethal. Overcrowding, rampant disease, deliberate starvation, and lack of basic sanitation claimed hundreds of thousands of lives before the mass deportations even began.</p>
+                        <br>
+                        <p>Behind the front lines of the advancing German army in the Soviet Union, the violence escalated drastically. Mobile killing squads known as the Einsatzgruppen, heavily assisted by local collaborators, followed the regular military and carried out mass shootings. Entire Jewish communities were rounded up, forced to dig their own graves in ravines and forests, and executed en masse. It is estimated that nearly two million Jews were murdered in these "Holocaust by bullets" operations.</p>
+                    </div>
+                </div>
             </section>
 
             <section class="content-section hidden">
                 <h2 class="section-title">The "Final Solution"</h2>
-                <p>In January 1942, high-ranking Nazi officials convened at the Wannsee Conference to coordinate the logistical execution of what they euphemistically called the "Final Solution to the Jewish Question." The focus shifted from mass shootings, which were deemed inefficient and psychologically taxing for the perpetrators, to an industrialized system of mass murder. Six major extermination camps were constructed in occupied Poland, including Auschwitz-Birkenau, Treblinka, Sobibor, and Belzec.</p>
-                <br>
-                <p>Victims from across Europe were packed into cattle cars without food, water, or ventilation for journeys that could last for days. Upon arrival, families were immediately separated during the "selection" process. Those deemed fit for slave labor faced brutal conditions, starvation, and arbitrary execution. The vast majority—including children, the elderly, and the pregnant—were sent directly to gas chambers disguised as shower rooms. This mechanized, factory-like approach to genocide was unprecedented in human history.</p>
+                <div class="media-text-split">
+                    <div class="media-content">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Auschwitz_Birkenau_gate.jpg/800px-Auschwitz_Birkenau_gate.jpg" class="vintage-media" alt="The main gate and train tracks leading into the Auschwitz-Birkenau extermination camp.">
+                        <div class="audio-container">
+                            <label> Survivor Testimony</label>
+                            <audio controls aria-label="Audio recording of Edward R. Murrow's Buchenwald report">
+                                <source src="https://s3.amazonaws.com/RE-Warehouse/_num/1945_radio_news_1945-04-15_cbs_-_edward_r_murrow_-_buchenwald_report.mp3" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                    <div class="text-content">
+                        <p>In January 1942, high-ranking Nazi officials convened at the Wannsee Conference to coordinate the logistical execution of what they euphemistically called the "Final Solution to the Jewish Question." The focus shifted from mass shootings, which were deemed inefficient and psychologically taxing for the perpetrators, to an industrialized system of mass murder. Six major extermination camps were constructed in occupied Poland, including Auschwitz-Birkenau, Treblinka, Sobibor, and Belzec.</p>
+                        <br>
+                        <p>Victims from across Europe were packed into cattle cars without food, water, or ventilation for journeys that could last for days. Upon arrival, families were immediately separated during the "selection" process. Those deemed fit for slave labor faced brutal conditions, starvation, and arbitrary execution. The vast majority—including children, the elderly, and the pregnant—were sent directly to gas chambers disguised as shower rooms. This mechanized, factory-like approach to genocide was unprecedented in human history.</p>
+                    </div>
+                </div>
             </section>
 
             <section class="content-section hidden">
                 <h2 class="section-title">Legacy and Remembrance</h2>
-                <p>By the time Allied forces penetrated Germany and Poland, discovering the horrifying reality of the camps, the scale of the devastation was almost incomprehensible. Six million Jewish men, women, and children had been murdered—representing two-thirds of Europe's Jewish population. The Nazi regime also targeted and systematically murdered millions of others they deemed "undesirable," including Romani people, people with disabilities, Soviet prisoners of war, Polish civilians, homosexuals, and political dissidents.</p>
-                <br>
-                <p>The liberation of the camps revealed mountains of corpses, starving survivors barely clinging to life, and the undeniable physical evidence of an industrialized genocide. The subsequent Nuremberg Trials established the concept of "crimes against humanity," holding high-ranking Nazi officials accountable for their atrocities. Today, the Holocaust stands as a profound, agonizing reminder of the absolute extremes of human cruelty, underscoring the critical necessity of defending human rights and combating hatred in all its forms.</p>
+                <div class="media-text-split reverse">
+                    <div class="media-content">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Buchenwald_survivors_in_barracks.jpg/800px-Buchenwald_survivors_in_barracks.jpg" class="vintage-media" alt="Survivors looking out from their barracks at Buchenwald concentration camp after liberation, 1945.">
+                    </div>
+                    <div class="text-content">
+                        <p>By the time Allied forces penetrated Germany and Poland, discovering the horrifying reality of the camps, the scale of the devastation was almost incomprehensible. Six million Jewish men, women, and children had been murdered—representing two-thirds of Europe's Jewish population. The Nazi regime also targeted and systematically murdered millions of others they deemed "undesirable," including Romani people, people with disabilities, Soviet prisoners of war, Polish civilians, homosexuals, and political dissidents.</p>
+                        <br>
+                        <p>The liberation of the camps revealed mountains of corpses, starving survivors barely clinging to life, and the undeniable physical evidence of an industrialized genocide. The subsequent Nuremberg Trials established the concept of "crimes against humanity," holding high-ranking Nazi officials accountable for their atrocities. Today, the Holocaust stands as a profound, agonizing reminder of the absolute extremes of human cruelty, underscoring the critical necessity of defending human rights and combating hatred in all its forms.</p>
+                    </div>
+                </div>
             </section>
         </main>
     </div>
@@ -1387,6 +1640,47 @@
                         timelineProgress.style.height = '0px';
                     }
                 }
+
+                // Sticky Scrollytelling Effect
+                const narrativeSections = document.querySelectorAll('.page.active .narrative-section');
+                narrativeSections.forEach(section => {
+                    const rect = section.getBoundingClientRect();
+                    const content = section.querySelector('.narrative-content');
+                    const windowHeight = window.innerHeight;
+                    
+                    // Calculate distances from the center of the screen
+                    const topDist = rect.top - windowHeight / 2;
+                    const bottomDist = rect.bottom - windowHeight / 2;
+                    
+                    let opacity = 0;
+                    let scale = 0.9;
+                    let translateY = 20; 
+                    
+                    if (topDist <= 0 && bottomDist >= 0) {
+                        // Center of screen is inside the section
+                        opacity = 1;
+                        scale = 1;
+                        translateY = 0;
+                    } else if (topDist > 0 && topDist < windowHeight / 2) {
+                        // Section is entering from bottom
+                        const progress = 1 - (topDist / (windowHeight / 2));
+                        opacity = progress;
+                        scale = 0.9 + (0.1 * progress);
+                        translateY = 20 * (1 - progress);
+                    } else if (bottomDist < 0 && bottomDist > -windowHeight / 2) {
+                        // Section is leaving at the top
+                        const progress = 1 - (Math.abs(bottomDist) / (windowHeight / 2));
+                        opacity = progress;
+                        scale = 0.9 + (0.1 * progress);
+                        translateY = -20 * (1 - progress);
+                    }
+                    
+                    if (content) {
+                        content.style.setProperty('--scroll-o', opacity);
+                        content.style.setProperty('--scroll-s', scale);
+                        content.style.setProperty('--scroll-y', translateY + 'px');
+                    }
+                });
             });
 
             // Mobile Menu Toggle
@@ -1398,7 +1692,26 @@
                     navLinks.classList.toggle('active');
                     hamburger.classList.toggle('active');
                 });
+                hamburger.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        navLinks.classList.toggle('active');
+                        hamburger.classList.toggle('active');
+                    }
+                });
             }
+            
+            // Add keyboard support for interactive elements with onclick
+            document.querySelectorAll('[onclick]').forEach(el => {
+                if(el.tagName !== 'A' && el.getAttribute('tabindex') === '0') {
+                    el.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            el.click();
+                        }
+                    });
+                }
+            });
 
             // Intersection Observer for scroll animations
             const observerOptions = {
