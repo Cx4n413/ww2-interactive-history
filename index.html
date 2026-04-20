@@ -28,7 +28,6 @@
             font-family: var(--font-body);
             background-color: var(--bg-color);
             color: var(--text-color);
-            overflow-x: hidden;
             scroll-behavior: smooth;
             background: var(--bg-color);
             /* Concrete/Grunge Texture + Map Grid */
@@ -42,7 +41,7 @@
         }
 
         /* Animated Film Grain - Increased opacity and adjusted blend mode so it's actually visible */
-        body::after {
+        .film-grain {
             animation: grain 8s steps(10) infinite;
             background-image: url("https://www.transparenttextures.com/patterns/stucco.png");
             content: "";
@@ -52,19 +51,31 @@
             position: fixed;
             top: -100%;
             width: 300%;
-            z-index: 9999;
+            z-index: 999999;
             pointer-events: none;
-            mix-blend-mode: color-burn;
+        }
+
+        @keyframes grain {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-1%, -2%); }
+            20% { transform: translate(-3%, 1%); }
+            30% { transform: translate(1%, -5%); }
+            40% { transform: translate(-1%, 5%); }
+            50% { transform: translate(-3%, 2%); }
+            60% { transform: translate(3%, 0%); }
+            70% { transform: translate(0%, 3%); }
+            80% { transform: translate(1%, 5%); }
+            90% { transform: translate(-2%, 2%); }
         }
 
         /* Vignette to frame the screen like an old camera/dossier file */
-        body::before {
+        .vignette-overlay {
             content: "";
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             box-shadow: inset 0 0 150px rgba(0,0,0,0.8);
             pointer-events: none;
-            z-index: 9998;
+            z-index: 999998;
         }
 
         h1, h2, h3, h4, h5, h6 {
@@ -97,8 +108,13 @@
             justify-content: space-between;
             align-items: center;
             background: transparent;
-            transition: background 0.4s ease, padding 0.4s ease;
+            transition: background 0.4s ease, padding 0.4s ease, transform 0.4s ease;
+            transform: translateY(-100%);
             z-index: 1000;
+        }
+
+        .navbar.show-nav {
+            transform: translateY(0);
         }
 
         .navbar.scrolled {
@@ -320,73 +336,100 @@
 
         /* Narrative Scrolling Effect */
         .narrative-container {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-            margin-bottom: 5rem;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+            width: 100vw;
+            height: 1000vh; /* Increased scrollable duration for longer holds and gaps */
         }
 
-        .narrative-section {
-            min-height: 150vh;
-            display: block;
-            position: relative;
-            background-color: var(--card-bg);
-            border: 1px solid #3d3930;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        .narrative-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .narrative-bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--bg-color);
             background-blend-mode: multiply;
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
+            opacity: var(--scroll-o, 0);
+            will-change: opacity;
         }
 
-        .narrative-section::before {
+        .narrative-bg::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(to bottom, rgba(28,27,24,0.9), rgba(10,9,8,0.7));
+            background: radial-gradient(ellipse at bottom, rgba(28,27,24,0.8) 0%, rgba(0,0,0,0.7) 70%), linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, var(--bg-color) 100%);
             z-index: 0;
             pointer-events: none;
         }
 
-        .narrative-section.parallax-1 {
+        /* Re-use the existing hero background for the first slide */
+        .narrative-bg.parallax-0 {
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/St_Paul%27s_survives.jpg/1920px-St_Paul%27s_survives.jpg');
+        }
+
+        .narrative-bg.parallax-1 {
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Wehrmacht_soldiers_in_Poland%2C_September_1939.jpg/1200px-Wehrmacht_soldiers_in_Poland%2C_September_1939.jpg');
         }
 
-        .narrative-section.parallax-2 {
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/St_Paul%27s_survives.jpg/1200px-St_Paul%27s_survives.jpg');
+        .narrative-bg.parallax-2 {
+            /* Handled inline in slide 2 */
         }
         
-        .narrative-section.parallax-3 {
+        .narrative-bg.parallax-3 {
+            /* Handled inline in slide 3 */
+        }
+
+        .narrative-bg.parallax-4 {
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Yalta_summit_1945_with_Churchill%2C_Roosevelt%2C_Stalin.jpg/1200px-Yalta_summit_1945_with_Churchill%2C_Roosevelt%2C_Stalin.jpg');
         }
 
         .narrative-content {
-            position: sticky;
-            top: 50vh;
-            transform: translateY(calc(-50% + var(--scroll-y, 20px))) scale(var(--scroll-s, 0.9));
+            position: absolute;
+            transform: translateY(var(--scroll-y, 0px));
             opacity: var(--scroll-o, 0);
-            margin: 0 auto;
             z-index: 1;
             max-width: 900px;
             text-align: center;
-            background: rgba(28, 26, 23, 0.6);
-            padding: 3rem;
-            border-radius: 4px;
-            border: 1px solid rgba(139, 37, 37, 0.2);
-            backdrop-filter: blur(5px);
+            padding: 0 2rem;
             will-change: transform, opacity;
+            pointer-events: auto; /* Re-enable pointer events for the button */
         }
-        
-        .narrative-content:hover {
-            transform: translateY(calc(-50% + var(--scroll-y, 0px))) scale(calc(var(--scroll-s, 1) + 0.02));
-            transition: transform 0.3s ease;
+
+        /* Make the hero title styling apply seamlessly in the scroller */
+        .narrative-content h1 {
+            font-size: 4rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .narrative-content .subtitle {
+            font-size: 1.5rem;
+            color: #d1ccbf;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            font-family: var(--font-typewriter);
         }
 
         .narrative-content h2 {
-            font-size: 3rem;
+            font-size: 3.5rem;
             color: #fff;
             margin-bottom: 2rem;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.9);
+            text-shadow: 2px 2px 15px rgba(0,0,0,1), 0 0 30px rgba(0,0,0,0.8);
         }
 
         .narrative-content h2::after {
@@ -401,11 +444,21 @@
         }
 
         .narrative-content p {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             line-height: 1.8;
-            color: #e5e0d8;
-            text-shadow: 1px 1px 5px rgba(0,0,0,0.9);
+            color: #f5f0e6;
+            text-shadow: 2px 2px 10px rgba(0,0,0,1), 0 0 20px rgba(0,0,0,0.8);
             font-weight: bold;
+        }
+        
+        .next-section-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 0 2rem;
+            animation: fadeInUp 1s ease forwards;
+            opacity: 0;
+            animation-delay: 0.5s;
         }
         
         /* Media Text Split Layout */
@@ -926,8 +979,8 @@
         .page.active {
             opacity: 1;
             visibility: visible;
-            transform: scale(1) translateY(0);
-            filter: blur(0);
+            transform: none;
+            filter: none;
             position: relative;
             height: auto;
             overflow: visible;
@@ -1182,71 +1235,45 @@
     </nav>
 
     <div id="home-page" class="page active">
-        <header class="hero" id="home-hero">
-            <div class="hero-overlay"></div>
-            <div class="hero-content">
-                <h1 class="typing-text">The Deadliest<br>Conflict in Human History</h1>
-                <p class="fade-in-up delay-1">Student: Nathaniel Naik | Date: April 9, 2026 | Class: AP World History</p>
-                <a href="#" onclick="showPage('america')" class="btn fade-in-up delay-2" aria-label="Explore the Timeline">Explore the Timeline</a>
+        <section class="narrative-container">
+            <div class="narrative-sticky">
+                <!-- Slide 0: The Hero -->
+                <div class="narrative-bg parallax-0"></div>
+                <div class="narrative-bg parallax-1"></div>
+                <div class="narrative-bg parallax-2"></div>
+                <div class="narrative-bg parallax-3"></div>
+                <div class="narrative-bg parallax-4"></div>
+                
+                <div class="narrative-content slide-0">
+                    <h1>The Deadliest<br>Conflict in Human History</h1>
+                    <p class="subtitle" style="color:#a63030;">Student: Nathaniel Naik | Date: April 9, 2026 | Class: American History</p>
+                    <div style="margin-top: 3rem; display: flex; flex-direction: column; align-items: center; gap: 0.8rem;">
+                        <div class="mouse"></div>
+                    </div>
+                </div>
+
+                <div class="narrative-content slide-1">
+                    <h2>A World Torn Apart</h2>
+                    <p>World War II (1939–1945) was the deadliest and most widespread conflict in human history, involving the vast majority of the world's nations. It was fought primarily between two major military alliances: the Axis powers (led by Nazi Germany, Imperial Japan, and Fascist Italy) and the Allies (led by the United Kingdom, the Soviet Union, and the United States).</p>
+                </div>
+                
+                <div class="narrative-content slide-2">
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, calc(-50% - var(--scroll-y, 0px) * 0.7)); width: 100vw; height: 100vh; background-image: url('https://www.nationalww2museum.org/sites/default/files/2023-10/Defilada_wojsk_niemieckich_w_Warszawie_%282-105%29.jpg'); background-size: cover; background-position: center; opacity: 0.25; pointer-events: none; mask-image: radial-gradient(ellipse at center, black 10%, transparent 65%); -webkit-mask-image: radial-gradient(ellipse at center, black 10%, transparent 65%);"></div>
+                    <p style="position: relative; z-index: 2;">The war began on September 1, 1939, when Germany invaded Poland, prompting Britain and France to declare war. The conflict escalated into a truly global war following the Japanese attack on Pearl Harbor in December 1941, which brought the United States into the fight. The war was characterized by unprecedented industrial-scale warfare, massive bombing campaigns of civilian populations, and the horrors of the Holocaust, resulting in an estimated 70 to 85 million fatalities.</p>
+                </div>
+                
+                <div class="narrative-content slide-3">
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, calc(-50% - var(--scroll-y, 0px) * 0.7)); width: 100vw; height: 100vh; background-image: url('https://i.natgeofe.com/n/3634a023-1169-4e7e-abde-a5e0a61986a1/germany-surrenders-wwii-04.jpg'); background-size: cover; background-position: center; opacity: 0.25; pointer-events: none; mask-image: radial-gradient(ellipse at center, black 10%, transparent 65%); -webkit-mask-image: radial-gradient(ellipse at center, black 10%, transparent 65%);"></div>
+                    <p style="position: relative; z-index: 2;">The conflict concluded with the unconditional surrender of Germany in May 1945 and the formal surrender of Japan in September 1945 following the dropping of atomic bombs on Hiroshima and Nagasaki. The aftermath radically shifted the global power dynamic, leading to the creation of the United Nations to foster international cooperation and the onset of the Cold War.</p>
+                </div>
+
+                <div class="narrative-content slide-4">
+                    <div class="next-section-container" style="padding-top: 0; animation: none; opacity: 1;">
+                        <a href="#" onclick="showPage('america')" class="btn" aria-label="Go to America Enters page">Continue to America Enters &rarr;</a>
+                    </div>
+                </div>
             </div>
-        </header>
-
-        <main id="explore">
-            <section class="narrative-container">
-                <div class="narrative-section parallax-1">
-                    <div class="narrative-content">
-                        <h2>A World Torn Apart</h2>
-                        <p>World War II (1939–1945) was the deadliest and most widespread conflict in human history, involving the vast majority of the world's nations. It was fought primarily between two major military alliances: the Axis powers (led by Nazi Germany, Imperial Japan, and Fascist Italy) and the Allies (led by the United Kingdom, the Soviet Union, and the United States).</p>
-                    </div>
-                </div>
-                
-                <div class="narrative-section parallax-2">
-                    <div class="narrative-content">
-                        <p>The war began on September 1, 1939, when Germany invaded Poland, prompting Britain and France to declare war. The conflict escalated into a truly global war following the Japanese attack on Pearl Harbor in December 1941, which brought the United States into the fight. The war was characterized by unprecedented industrial-scale warfare, massive bombing campaigns of civilian populations, and the horrors of the Holocaust, resulting in an estimated 70 to 85 million fatalities.</p>
-                    </div>
-                </div>
-                
-                <div class="narrative-section parallax-3">
-                    <div class="narrative-content">
-                        <p>The conflict concluded with the unconditional surrender of Germany in May 1945 and the formal surrender of Japan in September 1945 following the dropping of atomic bombs on Hiroshima and Nagasaki. The aftermath radically shifted the global power dynamic, leading to the creation of the United Nations to foster international cooperation and the onset of the Cold War.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="topics-grid">
-                <div class="topic-card hidden scale-in delay-1" onclick="showPage('america')" role="button" tabindex="0" aria-label="Go to America Enters page">
-                    <div class="card-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Pearl_Harbor_bombing.jpg/800px-Pearl_Harbor_bombing.jpg');"></div>
-                    <div class="card-content">
-                        <h3>America Enters the War</h3>
-                        <p>Discover how the unprovoked attack on Pearl Harbor thrust the United States into the global conflict.</p>
-                    </div>
-                </div>
-                
-                <div class="topic-card disabled hidden scale-in delay-2">
-                    <div class="card-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/D-Day_landing_at_Normandy.jpg/800px-D-Day_landing_at_Normandy.jpg');"></div>
-                    <div class="card-content">
-                        <h3>The European Theater</h3>
-                        <p>Coming Soon. Explore the battles that shaped the liberation of Europe.</p>
-                    </div>
-                </div>
-
-                <div class="topic-card disabled hidden scale-in delay-3">
-                    <div class="card-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Atomic_bomb_1945_mission_patch.jpg/800px-Atomic_bomb_1945_mission_patch.jpg');"></div>
-                    <div class="card-content">
-                        <h3>The Pacific Theater</h3>
-                        <p>Coming Soon. Journey through the island-hopping campaigns and the war's dramatic end.</p>
-                    </div>
-                </div>
-
-                <div class="topic-card hidden scale-in delay-4" onclick="showPage('holocaust')" role="button" tabindex="0" aria-label="Go to The Holocaust page">
-                    <div class="card-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Auschwitz_Birkenau_main_gate.jpg/800px-Auschwitz_Birkenau_main_gate.jpg');"></div>
-                    <div class="card-content">
-                        <h3>The Holocaust</h3>
-                        <p>Learn about the systematic state-sponsored genocide of six million Jews and millions of others.</p>
-                    </div>
-                </div>
-            </section>
-        </main>
+        </section>
     </div>
 
     <div id="america-page" class="page">
@@ -1341,6 +1368,10 @@
                 </div>
             </div>
 
+            <section class="next-section-container">
+                <a href="#" onclick="showPage('leaders')" class="btn" aria-label="Go to World Leaders page">Continue to World Leaders &rarr;</a>
+            </section>
+
         </main>
     </div>
 
@@ -1368,8 +1399,8 @@
                     </div>
                     <div class="leader-info">
                         <h3>Franklin D. Roosevelt</h3>
-                        <p>Franklin D. Roosevelt emerged as a beacon of hope during the Great Depression, projecting immense confidence and utilizing innovative 'fireside chats' to communicate directly with the American people. His pragmatic, reassuring leadership style allowed him to push through sweeping New Deal reforms and win an unprecedented four terms as President.</p>
-                        <p>As war loomed, Roosevelt proved to be a masterful political tactician. He gradually prepared an isolationist nation for global conflict through initiatives like the Lend-Lease program, serving as the "Arsenal of Democracy" before officially entering the war. His ability to build and maintain the 'Grand Alliance' with vastly different figures like Churchill and Stalin was crucial to securing an Allied victory.</p>
+                        <p>Franklin D. Roosevelt gave people hope during the Great Depression. He showed great confidence and used new radio broadcasts called "fireside chats" to talk directly to the American people. His practical and comforting leadership style helped him pass large New Deal laws and win four terms as President, which no one else has done.</p>
+                        <p>As war approached, Roosevelt proved to be a highly skilled politician. He slowly prepared a country that wanted to avoid war for a global conflict through programs like Lend-Lease. The U.S. acted as the "Arsenal of Democracy" by supplying weapons before officially fighting. His ability to create and keep the "Grand Alliance" with very different leaders like Churchill and Stalin was extremely important for the Allies to win.</p>
                         <audio controls aria-label="Audio recording of Franklin D. Roosevelt's speech" title="Play audio of Franklin D. Roosevelt">
                             <source src="https://s3.amazonaws.com/RE-Warehouse/f/franklin_d_roosevelt_1940-12-29_great_arsenal_of_democracy_speech.mp3" type="audio/mpeg">
                             Your browser does not support the audio element.
@@ -1383,8 +1414,8 @@
                     </div>
                     <div class="leader-info">
                         <h3>Winston Churchill</h3>
-                        <p>Winston Churchill spent much of the 1930s in political isolation as a prescient voice warning against the rising threat of Nazi Germany—a stance that catapulted him to Prime Minister when the policy of appeasement failed in 1940. Known for his bulldog-like stubbornness and unparalleled mastery of the English language, his stirring speeches became a weapon in themselves.</p>
-                        <p>By promising nothing but "blood, toil, tears, and sweat," he stiffened British resolve during their darkest hours of the Blitz, ensuring the island nation stood firm when all of Western Europe had fallen. He led from the front with a hands-on, deeply involved military style, demanding constant action and famously refusing to entertain any thought of surrender.</p>
+                        <p>Winston Churchill spent most of the 1930s out of power, warning people early about the growing danger of Nazi Germany. This warning helped him become Prime Minister in 1940 after attempts to make peace with Germany failed. He was known for being very stubborn and being a great speaker. His powerful speeches were so effective they helped fight the war.</p>
+                        <p>He promised the country only "blood, toil, tears, and sweat." This made the British people brave during the heavy bombing of the Blitz, making sure Britain kept fighting even after the rest of Western Europe was defeated. He was very involved in military planning. He always wanted to attack and completely refused to ever surrender.</p>
                         <audio controls aria-label="Audio recording of Winston Churchill's speech" title="Play audio of Winston Churchill">
                             <source src="https://s3.amazonaws.com/RE-Warehouse/w/winston_churchill_speeches_and_radio_broadcasts_1934-11-16_the_threat_of_nazi_germany.mp3" type="audio/ogg">
                             Your browser does not support the audio element.
@@ -1398,8 +1429,8 @@
                     </div>
                     <div class="leader-info">
                         <h3>Joseph Stalin</h3>
-                        <p>Joseph Stalin rose from a radical Bolshevik operative to the absolute dictator of the Soviet Union, systematically outmaneuvering and eliminating key rivals. His leadership was defined by extreme paranoia, an iron-fisted totalitarianism, and an obsession with rapid industrialization, solidifying a terrifying cult of personality at the cost of millions of lives.</p>
-                        <p>As a war leader during the Nazi invasion, Stalin rebounded from initial shock with ruthless, unyielding directives like Order No. 227 ("Not One Step Back"). He demanded total obedience and immense, unprecedented sacrifice from the Soviet people, ruling through sheer terror while maintaining a rigid grip on the military apparatus that would eventually turn the tide of the war.</p>
+                        <p>Joseph Stalin rose from a communist rebel to the complete ruler of the Soviet Union by outsmarting and killing his rivals. His leadership was defined by being very suspicious of others, having total control over everyone, and forcing the country to build factories quickly. He made people treat him like a god, but his actions caused millions of people to die.</p>
+                        <p>When Nazi Germany invaded, Stalin recovered from his early shock by giving strict and cruel orders, like Order No. 227 ("Not One Step Back"). He demanded complete obedience and huge sacrifices from the Soviet people. He ruled using extreme fear while keeping tight control over the army. This army would eventually start winning the war.</p>
                         <audio controls aria-label="Audio recording of Joseph Stalin's speech" title="Play audio of Joseph Stalin">
                             <source src="https://s3.amazonaws.com/RE-Warehouse/_num/1945_radio_news_1945-04-27_cbs_-_edward_r_murrow_-_stalin_speech.mp3" type="audio/ogg">
                             Your browser does not support the audio element.
@@ -1409,12 +1440,12 @@
 
                 <div class="leader-card hidden delay-4">
                     <div class="leader-portrait">
-                        <img src="https://res.cloudinary.com/aenetworks/image/upload/c_fill,ar_2,w_3840,h_1920,g_auto/dpr_auto/f_auto/q_auto:eco/v1/adolf-hitler-gettyimages-119505258" alt="Adolf Hitler">
+                        <img src="https://lh3.googleusercontent.com/ci/AL18g_QXVHPNn_eOPRsDarKcfOsnC8Vy2MEUPR4tjTObj5bMU9Xn8Ge7YGjBjPKJBfhTdgvaH4qV=s1200" alt="Adolf Hitler">
                     </div>
                     <div class="leader-info">
                         <h3>Adolf Hitler</h3>
-                        <p>Adolf Hitler capitalized on the economic devastation of the Weimar Republic, rising to power through mesmerizing, deeply theatrical speeches and the violent intimidation tactics of his paramilitary forces. His leadership style was driven by manic obsession and absolute fanaticism, cultivating a "Führer" cult of personality that demanded unquestioning loyalty over competence.</p>
-                        <p>His horrific ideology of Aryan racial supremacy served as the foundational law of the Third Reich, culminating in the systematic genocide of the Holocaust. Administratively, Hitler ruled through a chaotic system of overlapping, competing bureaucracies, ensuring that all final authority rested solely in his hands, which ultimately led to erratic military blunders as his delusions deepened.</p>
+                        <p>Adolf Hitler took advantage of Germany's ruined economy. He gained power using dramatic speeches and violent gangs to scare people. His leadership style was driven by extreme obsession and extreme beliefs. He made people treat him as their supreme "Führer" (Leader) and cared more about blind loyalty than actual skill.</p>
+                        <p>His terrible belief that the Aryan race was better than everyone else became the main rule of his government. This belief led directly to the Holocaust, where millions of innocent people were murdered. He ran the government by creating a messy system of departments that fought with each other. This made sure he made every final decision. However, this caused him to make terrible military mistakes as he lost touch with reality.</p>
                         <audio controls aria-label="Audio recording of Adolf Hitler's speech" title="Play audio of Adolf Hitler">
                             <source src="https://s3.amazonaws.com/RE-Warehouse/v/voices_of_history_1934-01-30_hitler_reichstag_speech.mp3" type="audio/ogg">
                             Your browser does not support the audio element.
@@ -1428,8 +1459,8 @@
                     </div>
                     <div class="leader-info">
                         <h3>Benito Mussolini</h3>
-                        <p>Benito Mussolini capitalized on post-war Italian discontent, founding the Fascist movement and intimidating the government into handing over power through the theatrical "March on Rome" in 1922. He centralized absolute power around his own cult of personality, branding himself as "Il Duce" (The Leader).</p>
-                        <p>He ruled by projecting an image of fierce, hyper-masculine strength, promising a glorious return to the dominance of the ancient Roman Empire. His leadership heavily prioritized aggressive militarism, intense state propaganda, and grandiose posturing over pragmatic planning, ultimately leading Italy into disastrous, overextended military campaigns alongside Nazi Germany.</p>
+                        <p>Benito Mussolini used the anger of the Italian people after World War I. He started the Fascist movement and scared the government into giving him power during the "March on Rome" in 1922. He took all the power for himself, made people worship him, and called himself "Il Duce" (The Leader).</p>
+                        <p>He ruled by acting very tough and strong. He promised to make Italy as powerful as the ancient Roman Empire. He cared more about building up the military, spreading government lies, and showing off than he did about making practical plans. This eventually led Italy into terrible, failing wars alongside Nazi Germany.</p>
                         <audio controls aria-label="Audio recording of Benito Mussolini's speech" title="Play audio of Benito Mussolini">
                             <source src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Benito_Mussolini_-_Dichiarazione_di_guerra_%2810_giugno_1940%29.ogg" type="audio/ogg">
                             Your browser does not support the audio element.
@@ -1439,18 +1470,22 @@
 
                 <div class="leader-card hidden delay-6">
                     <div class="leader-portrait">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Hideki_Tojo.jpg/800px-Hideki_Tojo.jpg" alt="Hideki Tojo">
+                        <img src="https://static01.nyt.com/images/2021/06/16/world/16japan-tojo1/16japan-tojo1-mediumSquareAt3X.jpg" alt="Hideki Tojo">
                     </div>
                     <div class="leader-info">
                         <h3>Hideki Tojo</h3>
-                        <p>Hideki Tojo rose through the Imperial Japanese Army, earning the nickname "The Razor" for his sharp bureaucratic efficiency. A fierce nationalist, he became the face of Japanese expansionism, serving as Prime Minister and Minister of War simultaneously. Unlike European dictators, he was not an absolute sovereign, but a devoted bureaucratic loyalist who answered to Emperor Hirohito.</p>
-                        <p>His leadership style was deeply authoritarian and unyielding. As the primary architect of the preemptive strike on Pearl Harbor, Tojo enforced total national mobilization and severely restricted civilian liberties. He promoted a fanatic martial culture based on the Bushido code, demanding absolute loyalty and glorifying death before surrender across the Pacific Theater.</p>
+                        <p>Hideki Tojo moved up in the Japanese Army. People called him "The Razor" because he was very quick and organized. He was a strong nationalist who became the main leader of Japan's efforts to conquer other countries. He served as both Prime Minister and Minister of War at the same time. Unlike leaders in Europe, he was not a total dictator. He was a loyal official who followed the orders of Emperor Hirohito.</p>
+                        <p>He had a stubborn, strict, authoritarian leadership style. As the main planner of the surprise attack on Pearl Harbor, he forced the entire country to focus on the war and took away many freedoms from normal citizens. He pushed an extreme military culture based on the old samurai code. He demanded complete loyalty and taught soldiers that it was better to die fighting than to surrender.</p>
                         <audio controls aria-label="Audio recording of Hideki Tojo's speech" title="Play audio of Hideki Tojo">
                             <source src="https://s3.amazonaws.com/RE-Warehouse/_num/1941_radio_news_1941-12-07_nhk_-_gen_hideki_tojo_declares_war_on_the_allies.mp3" type="audio/mpeg">
                             Your browser does not support the audio element.
                         </audio>
                     </div>
                 </div>
+            </section>
+            
+            <section class="next-section-container">
+                <a href="#" onclick="showPage('holocaust')" class="btn" aria-label="Go to The Holocaust page">Continue to The Holocaust &rarr;</a>
             </section>
         </main>
     </div>
@@ -1537,12 +1572,19 @@
                     </div>
                 </div>
             </section>
+            
+            <section class="next-section-container">
+                <a href="#" onclick="showPage('home')" class="btn" aria-label="Return to Home page">&larr; Return to Home</a>
+            </section>
         </main>
     </div>
 
     <footer>
         <p>&copy; 2026 Nathaniel Naik. No rights reserved because I'm too lazy to do that.</p>
     </footer>
+
+    <div class="vignette-overlay"></div>
+    <div class="film-grain"></div>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -1597,12 +1639,47 @@
             // Navbar Scroll Effect
             const navbar = document.querySelector('.navbar');
             let scrollIndicatorHidden = false;
+            let isTicking = false;
+            let navUnlocked = false;
             
             window.addEventListener('scroll', () => {
+                if (!isTicking) {
+                    window.requestAnimationFrame(() => {
+                        handleScroll();
+                        isTicking = false;
+                    });
+                    isTicking = true;
+                }
+            });
+
+            function handleScroll() {
+                const scrollBottom = window.innerHeight + window.scrollY;
+                const pageHeight = document.documentElement.scrollHeight;
+                
                 if (window.scrollY > 50) {
                     navbar.classList.add('scrolled');
                 } else {
                     navbar.classList.remove('scrolled');
+                }
+                
+                // Unlock the navbar forever once the user sees the continue button (slide 4)
+                const narrativeContainer = document.querySelector('.page.active .narrative-container');
+                if (narrativeContainer) {
+                    const rect = narrativeContainer.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+                    let progress = -rect.top / (rect.height - windowHeight);
+                    
+                    if (progress > 0.85) {
+                        navUnlocked = true;
+                    }
+                } else if (scrollBottom >= pageHeight - 100) {
+                    navUnlocked = true;
+                }
+                
+                if (navUnlocked) {
+                    navbar.classList.add('show-nav');
+                } else {
+                    navbar.classList.remove('show-nav');
                 }
                 
                 // Fade out scroll indicator on America page permanently
@@ -1641,47 +1718,52 @@
                     }
                 }
 
-                // Sticky Scrollytelling Effect
-                const narrativeSections = document.querySelectorAll('.page.active .narrative-section');
-                narrativeSections.forEach(section => {
-                    const rect = section.getBoundingClientRect();
-                    const content = section.querySelector('.narrative-content');
+                // Smooth Continuous Scrollytelling Effect
+                if (narrativeContainer) {
+                    const rect = narrativeContainer.getBoundingClientRect();
                     const windowHeight = window.innerHeight;
                     
-                    // Calculate distances from the center of the screen
-                    const topDist = rect.top - windowHeight / 2;
-                    const bottomDist = rect.bottom - windowHeight / 2;
+                    // Limit progress strictly between 0 and 1
+                    let progress = -rect.top / (rect.height - windowHeight);
+                    progress = Math.max(0, Math.min(1, progress));
                     
-                    let opacity = 0;
-                    let scale = 0.9;
-                    let translateY = 20; 
+                    const bgs = document.querySelectorAll('.page.active .narrative-bg');
+                    const contents = document.querySelectorAll('.page.active .narrative-content');
+                    const slides = contents.length; // Will be 5
                     
-                    if (topDist <= 0 && bottomDist >= 0) {
-                        // Center of screen is inside the section
-                        opacity = 1;
-                        scale = 1;
-                        translateY = 0;
-                    } else if (topDist > 0 && topDist < windowHeight / 2) {
-                        // Section is entering from bottom
-                        const progress = 1 - (topDist / (windowHeight / 2));
-                        opacity = progress;
-                        scale = 0.9 + (0.1 * progress);
-                        translateY = 20 * (1 - progress);
-                    } else if (bottomDist < 0 && bottomDist > -windowHeight / 2) {
-                        // Section is leaving at the top
-                        const progress = 1 - (Math.abs(bottomDist) / (windowHeight / 2));
-                        opacity = progress;
-                        scale = 0.9 + (0.1 * progress);
-                        translateY = -20 * (1 - progress);
+                    for (let i = 0; i < slides; i++) {
+                        const ideal = i / (slides - 1); 
+                        const dist = Math.abs(progress - ideal);
+                        
+                        // Hold the text fully visible for a specific scroll radius, then fade out
+                        let opacity = 0;
+                        const holdRadius = 0.04;
+                        const fadeRadius = 0.11;
+                        
+                        if (dist <= holdRadius) {
+                            opacity = 1; // Fully faded in for a few seconds
+                        } else if (dist < fadeRadius) {
+                            opacity = 1 - ((dist - holdRadius) / (fadeRadius - holdRadius));
+                            // Easing curve for butter-smooth visual
+                            opacity = Math.pow(opacity, 1.5);
+                        }
+                        
+                        const signedDist = progress - ideal; 
+                        const translateY = signedDist * 500; // Dynamic drifting float effect
+                        
+                        if (bgs[i]) bgs[i].style.setProperty('--scroll-o', opacity);
+                        if (contents[i]) {
+                            contents[i].style.setProperty('--scroll-o', opacity);
+                            contents[i].style.setProperty('--scroll-y', translateY + 'px');
+                            // Ensure fading out text doesn't block clicks on the buttons
+                            contents[i].style.pointerEvents = opacity > 0.1 ? 'auto' : 'none';
+                        }
                     }
-                    
-                    if (content) {
-                        content.style.setProperty('--scroll-o', opacity);
-                        content.style.setProperty('--scroll-s', scale);
-                        content.style.setProperty('--scroll-y', translateY + 'px');
-                    }
-                });
-            });
+                }
+            }
+
+            // Initialize scroll variables immediately to prevent black screen on load
+            handleScroll();
 
             // Mobile Menu Toggle
             const hamburger = document.querySelector('.hamburger');
